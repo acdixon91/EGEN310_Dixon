@@ -11,6 +11,8 @@
 		2BA95869222CE3D0008E205B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA95868222CE3D0008E205B /* ViewController.swift */; };
 		2BA9586B222CE3D1008E205B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BA9586A222CE3D1008E205B /* Assets.xcassets */; };
 		2BA9586E222CE3D1008E205B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BA9586C222CE3D1008E205B /* Main.storyboard */; };
+		2BA95892222CE431008E205B /* BTDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA9588A222CE431008E205B /* BTDiscovery.swift */; };
+		2BA95893222CE431008E205B /* BTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA9588B222CE431008E205B /* BTService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,8 @@
 		2BA9586D222CE3D1008E205B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2BA9586F222CE3D1008E205B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BA95870222CE3D1008E205B /* ArduinoBluetooth.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ArduinoBluetooth.entitlements; sourceTree = "<group>"; };
+		2BA9588A222CE431008E205B /* BTDiscovery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTDiscovery.swift; sourceTree = "<group>"; };
+		2BA9588B222CE431008E205B /* BTService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,7 @@
 		2BA95865222CE3D0008E205B /* ArduinoBluetooth */ = {
 			isa = PBXGroup;
 			children = (
+				2BA95889222CE431008E205B /* Classes */,
 				2BA95866222CE3D0008E205B /* AppDelegate.swift */,
 				2BA95868222CE3D0008E205B /* ViewController.swift */,
 				2BA9586A222CE3D1008E205B /* Assets.xcassets */,
@@ -61,6 +66,15 @@
 				2BA95870222CE3D1008E205B /* ArduinoBluetooth.entitlements */,
 			);
 			path = ArduinoBluetooth;
+			sourceTree = "<group>";
+		};
+		2BA95889222CE431008E205B /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				2BA9588A222CE431008E205B /* BTDiscovery.swift */,
+				2BA9588B222CE431008E205B /* BTService.swift */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -95,6 +109,11 @@
 				TargetAttributes = {
 					2BA95862222CE3D0008E205B = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -134,6 +153,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2BA95869222CE3D0008E205B /* ViewController.swift in Sources */,
+				2BA95893222CE431008E205B /* BTService.swift in Sources */,
+				2BA95892222CE431008E205B /* BTDiscovery.swift in Sources */,
 				2BA95867222CE3D0008E205B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
