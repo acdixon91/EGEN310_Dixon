@@ -712,12 +712,23 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="trf-xT-B0W">
                                 <rect key="frame" x="163" y="152" width="154" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Transmit" bezelStyle="rounded" alignment="center" continuous="YES" borderStyle="border" tag="1" imageScaling="proportionallyDown" inset="2" id="mhI-ry-kL3">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <buttonCell key="cell" type="push" title="Forward" alternateTitle="Forward" bezelStyle="rounded" alignment="center" continuous="YES" borderStyle="border" tag="1" allowsMixedState="YES" imageScaling="proportionallyDown" inset="2" id="mhI-ry-kL3">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="transmit:" target="XfG-lQ-9wD" id="Li1-6r-Qvy"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="n0o-oN-tBq">
+                                <rect key="frame" x="163" y="119" width="154" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Backward" alternateTitle="Backward" bezelStyle="rounded" alignment="center" continuous="YES" borderStyle="border" tag="1" imageScaling="proportionallyDown" inset="2" id="RqH-eJ-Flu">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="transmit:" target="XfG-lQ-9wD" id="f4v-uB-wZQ"/>
                                 </connections>
                             </button>
                         </subviews>

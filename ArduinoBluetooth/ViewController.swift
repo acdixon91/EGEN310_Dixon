@@ -35,12 +35,27 @@ class ViewController: NSViewController {
     
     
     @IBAction func transmit(_ sender: NSButton) {
-        print("button pressed")
-        let message = "B!\(sender.tag)\"$"
-        if let data = message.data(using: String.Encoding.utf8){
-            print(message)
-            sendPosition(data)
+        print("button pressed: \(sender.alternateTitle)")
+        print(sender.state)
+        var message = ""
+        
+        if(sender.state == .on ){
+            message = "!B\(sender.tag)\(true)\"$"
         }
+        else if(sender.state == .off){
+            message = "!B\(sender.tag)\(false)\"$"
+        }
+        else{
+           message = "B!\(sender.tag)\"$"
+        }
+        let valueString = (message as NSString).data(using: String.Encoding.utf8.rawValue)
+        sendPosition(valueString!)
+        
+        
+//        if let data = UInt8(sender.tag){
+//            print("made it into if let loop")
+//            sendPosition(data)
+//        }
     }
     
     @objc func connectionChanged(_ notification: Notification) {
@@ -84,12 +99,12 @@ class ViewController: NSViewController {
         if let bleService = btDiscoverySharedInstance.bleService {
             print("sending location")
             bleService.writePosition(position)
-            lastPosition = position;
+//            lastPosition = position;
             
             // Start delay timer
             allowTX = false
             if timerTXDelay == nil {
-                timerTXDelay = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(ViewController.timerTXDelayElapsed), userInfo: nil, repeats: false)
+                timerTXDelay = Timer.scheduledTimer(timeInterval: 0.0001, target: self, selector: #selector(ViewController.timerTXDelayElapsed), userInfo: nil, repeats: false)
             }
         }
     }
