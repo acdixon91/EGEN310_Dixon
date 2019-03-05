@@ -17,6 +17,8 @@ class ViewController: NSViewController {
     var timerTXDelay: Timer?
     var allowTX = true
     var lastPosition: UInt8 = 255
+    var buffer: Data?
+    var inBuffer = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,19 +36,25 @@ class ViewController: NSViewController {
     }
     
     
+    
     @IBAction func transmit(_ sender: NSButton) {
         print("button pressed: \(sender.alternateTitle)")
-        print(sender.state)
         var message = ""
         
         if(sender.state == .on ){
             message = "!B\(sender.tag)\(true)\"$"
+            print("state on")
         }
         else if(sender.state == .off){
             message = "!B\(sender.tag)\(false)\"$"
-        }
-        else{
-           message = "B!\(sender.tag)\"$"
+
+            //on quick clicks, it only sends the state value of off
+            print("state on")
+            let finalOnState = ("!B\(sender.tag)\(true)\"$" as NSString).data(using: String.Encoding.utf8.rawValue)
+            sendPosition(finalOnState!)
+            
+            print("state off")
+            sender.state = .on  //needs to turn state back to on
         }
         let valueString = (message as NSString).data(using: String.Encoding.utf8.rawValue)
         sendPosition(valueString!)
@@ -82,6 +90,8 @@ class ViewController: NSViewController {
         print("made it to sendPosition")
         print(allowTX)
         if !allowTX {
+            buffer = position
+            inBuffer = true
             return
         }
         
@@ -104,7 +114,7 @@ class ViewController: NSViewController {
             // Start delay timer
             allowTX = false
             if timerTXDelay == nil {
-                timerTXDelay = Timer.scheduledTimer(timeInterval: 0.0001, target: self, selector: #selector(ViewController.timerTXDelayElapsed), userInfo: nil, repeats: false)
+                timerTXDelay = Timer.scheduledTimer(timeInterval: 0.0000000001, target: self, selector: #selector(ViewController.timerTXDelayElapsed), userInfo: nil, repeats: false)
             }
         }
     }
@@ -113,8 +123,12 @@ class ViewController: NSViewController {
         self.allowTX = true
         self.stopTimerTXDelay()
         
-//        // Send current slider position
-//        self.sendPosition(UInt8(self.transmit.tag))
+        // Send buffer data
+        if inBuffer == true {
+            sendPosition(buffer!)
+            inBuffer = false
+        }
+        
     }
     
     func stopTimerTXDelay() {
