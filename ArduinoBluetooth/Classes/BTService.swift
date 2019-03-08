@@ -10,9 +10,13 @@ import Foundation
 import CoreBluetooth
 
 /* Services & Characteristics UUIDs */
+
+
+
 let BLEServiceUUID = CBUUID(string: "6e400001-b5a3-f393-e0a9-e50e24dcca9e")
 let PositionCharUUID = CBUUID(string: "6e400002-b5a3-f393-e0a9-e50e24dcca9e")
 let BLEServiceChangedStatusNotification = "kBLEServiceChangedStatusNotification"
+var previousData: Data?
 
 class BTService: NSObject, CBPeripheralDelegate {
   var peripheral: CBPeripheral?
@@ -93,15 +97,20 @@ class BTService: NSObject, CBPeripheralDelegate {
   
   // Mark: - Private
   
-    func writePosition(_ position: Data) {
+    func writeData(_ position: Data) {
     // See if characteristic has been discovered before writing to it
     
-    if let positionCharacteristic = self.positionCharacteristic {
-//      let data = Data(bytes: [position])
-        print("writePosition")
-      self.peripheral?.writeValue(position, for: positionCharacteristic, type: CBCharacteristicWriteType.withResponse)
+        if let positionCharacteristic = self.positionCharacteristic {
+            if(position != previousData){
+                previousData = position
+                print("writeData")
+                self.peripheral?.writeValue(position, for: positionCharacteristic, type: CBCharacteristicWriteType.withResponse)
+            }
+            else{
+                print("trying to send duplicate")
+            }
+        }
     }
-  }
   
   func sendBTServiceNotificationWithIsBluetoothConnected(_ isBluetoothConnected: Bool) {
     let connectionDetails = ["isConnected": isBluetoothConnected]

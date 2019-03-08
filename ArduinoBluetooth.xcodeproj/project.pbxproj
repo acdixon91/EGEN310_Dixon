@@ -16,6 +16,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2B4E62C622324E5F000C67C1 /* DirectionPadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectionPadView.swift; sourceTree = "<group>"; };
+		2B4E62C722324E5F000C67C1 /* XYPositionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XYPositionView.swift; sourceTree = "<group>"; };
+		2B4E62C822324E5F000C67C1 /* MotionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotionView.swift; sourceTree = "<group>"; };
+		2B4E62CA22324E5F000C67C1 /* ButtonPadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonPadView.swift; sourceTree = "<group>"; };
+		2B4E62CB22324E5F000C67C1 /* ButtonIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonIndicatorView.swift; sourceTree = "<group>"; };
+		2B4E62D122324E7D000C67C1 /* ExtendedGamepadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtendedGamepadView.swift; sourceTree = "<group>"; };
+		2B4E62D322324E9B000C67C1 /* GamepadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamepadView.swift; sourceTree = "<group>"; };
 		2BA95863222CE3D0008E205B /* ArduinoBluetooth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArduinoBluetooth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA95866222CE3D0008E205B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2BA95868222CE3D0008E205B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -25,6 +32,7 @@
 		2BA95870222CE3D1008E205B /* ArduinoBluetooth.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ArduinoBluetooth.entitlements; sourceTree = "<group>"; };
 		2BA9588A222CE431008E205B /* BTDiscovery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTDiscovery.swift; sourceTree = "<group>"; };
 		2BA9588B222CE431008E205B /* BTService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTService.swift; sourceTree = "<group>"; };
+		2BA95898222E0D70008E205B /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +46,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2B4E62C422324E35000C67C1 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2B4E62C522324E5F000C67C1 /* Detail Views */,
+				2BA95898222E0D70008E205B /* GameController.swift */,
+				2B4E62D322324E9B000C67C1 /* GamepadView.swift */,
+				2B4E62D122324E7D000C67C1 /* ExtendedGamepadView.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2B4E62C522324E5F000C67C1 /* Detail Views */ = {
+			isa = PBXGroup;
+			children = (
+				2B4E62C622324E5F000C67C1 /* DirectionPadView.swift */,
+				2B4E62C722324E5F000C67C1 /* XYPositionView.swift */,
+				2B4E62C822324E5F000C67C1 /* MotionView.swift */,
+				2B4E62C922324E5F000C67C1 /* Buttons and Switches */,
+			);
+			path = "Detail Views";
+			sourceTree = "<group>";
+		};
+		2B4E62C922324E5F000C67C1 /* Buttons and Switches */ = {
+			isa = PBXGroup;
+			children = (
+				2B4E62CA22324E5F000C67C1 /* ButtonPadView.swift */,
+				2B4E62CB22324E5F000C67C1 /* ButtonIndicatorView.swift */,
+			);
+			path = "Buttons and Switches";
+			sourceTree = "<group>";
+		};
 		2BA9585A222CE3D0008E205B = {
 			isa = PBXGroup;
 			children = (
@@ -57,6 +96,7 @@
 		2BA95865222CE3D0008E205B /* ArduinoBluetooth */ = {
 			isa = PBXGroup;
 			children = (
+				2B4E62C422324E35000C67C1 /* Controller */,
 				2BA95889222CE431008E205B /* Classes */,
 				2BA95866222CE3D0008E205B /* AppDelegate.swift */,
 				2BA95868222CE3D0008E205B /* ViewController.swift */,

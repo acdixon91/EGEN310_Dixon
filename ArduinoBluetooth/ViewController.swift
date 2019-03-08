@@ -17,8 +17,9 @@ class ViewController: NSViewController {
     var timerTXDelay: Timer?
     var allowTX = true
     var lastPosition: UInt8 = 255
-    var buffer: Data?
+    var buffer: [Data?] = []
     var inBuffer = false
+    var previousData: Data?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,9 +38,14 @@ class ViewController: NSViewController {
     
     
     
-    @IBAction func transmit(_ sender: NSButton) {
+    @IBAction func send(_ sender: NSButton) {
         print("button pressed: \(sender.alternateTitle)")
         var message = ""
+        
+        //to prevent lag, the momment button is pushed it is transmitted
+        print("initString sent - \"state on\"")
+        let initString = ("!B\(sender.tag)\(true)\"$" as NSString).data(using: String.Encoding.utf8.rawValue)
+        sendPosition(initString!)
         
         if(sender.state == .on ){
             message = "!B\(sender.tag)\(true)\"$"
@@ -47,14 +53,12 @@ class ViewController: NSViewController {
         }
         else if(sender.state == .off){
             message = "!B\(sender.tag)\(false)\"$"
-
             //on quick clicks, it only sends the state value of off
             print("state on")
             let finalOnState = ("!B\(sender.tag)\(true)\"$" as NSString).data(using: String.Encoding.utf8.rawValue)
             sendPosition(finalOnState!)
-            
-            print("state off")
             sender.state = .on  //needs to turn state back to on
+            print("state off")
         }
         let valueString = (message as NSString).data(using: String.Encoding.utf8.rawValue)
         sendPosition(valueString!)
@@ -90,31 +94,23 @@ class ViewController: NSViewController {
         print("made it to sendPosition")
         print(allowTX)
         if !allowTX {
-            buffer = position
-            inBuffer = true
+            if(position != previousData){
+                buffer.append(position)
+                inBuffer = true
+            }
             return
         }
-        
-//        // Validate value
-//        print(position)
-//        print(lastPosition)
-//        if position == lastPosition {
-//            return
-//        }
-//        else if ((position < 0) || (position > 180)) {
-//            return
-//        }
         
         // Send position to BLE Shield (if service exists and is connected)
         if let bleService = btDiscoverySharedInstance.bleService {
             print("sending location")
-            bleService.writePosition(position)
-//            lastPosition = position;
+            bleService.writeData(position)
+            previousData = position
             
             // Start delay timer
             allowTX = false
             if timerTXDelay == nil {
-                timerTXDelay = Timer.scheduledTimer(timeInterval: 0.0000000001, target: self, selector: #selector(ViewController.timerTXDelayElapsed), userInfo: nil, repeats: false)
+                timerTXDelay = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(ViewController.timerTXDelayElapsed), userInfo: nil, repeats: false)
             }
         }
     }
@@ -125,10 +121,11 @@ class ViewController: NSViewController {
         
         // Send buffer data
         if inBuffer == true {
-            sendPosition(buffer!)
-            inBuffer = false
+            sendPosition(buffer.removeFirst()!)
+            if(buffer.isEmpty){
+                inBuffer = false
+            }
         }
-        
     }
     
     func stopTimerTXDelay() {
