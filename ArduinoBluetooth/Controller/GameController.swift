@@ -11,6 +11,11 @@ import GameController
 
 class GameController : NSObject{
     
+    override init() {
+        super.init()
+        startWatchingForControllers()
+    }
+    
     
     func startWatchingForControllers() {
         let ctr = NotificationCenter.default
@@ -38,9 +43,11 @@ class GameController : NSObject{
         let name = String(describing:controller.vendorName)
         if let gamepad = controller.extendedGamepad {
             print("connect extended \(name)")
+            ExtendedGamePad.init(gamepad: gamepad)
             
-        } else if let gamepad = controller.microGamepad {
-            print("connect micro \(name)")
+        } else if let gamepad = controller.gamepad {
+            print("connected gamepad \(name)")
+            GamePad.init(gamepad: gamepad)
         } else {
             print("Huh? \(name)")
         }
@@ -50,5 +57,4 @@ class GameController : NSObject{
         
     }
     
-
 }

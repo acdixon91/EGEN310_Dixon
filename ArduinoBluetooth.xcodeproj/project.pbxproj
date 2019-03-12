@@ -8,13 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2B4E62D52232E8F0000C67C1 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA95898222E0D70008E205B /* GameController.swift */; };
-		2B4E62D62232E8F3000C67C1 /* GamepadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4E62D322324E9B000C67C1 /* GamepadView.swift */; };
-		2B4E62D72232E8F6000C67C1 /* ExtendedGamepadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4E62D122324E7D000C67C1 /* ExtendedGamepadView.swift */; };
-		2B4E62D82232E8FA000C67C1 /* DirectionPadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4E62C622324E5F000C67C1 /* DirectionPadView.swift */; };
-		2B4E62D92232E8FE000C67C1 /* XYPositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4E62C722324E5F000C67C1 /* XYPositionView.swift */; };
-		2B4E62DA2232E901000C67C1 /* MotionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4E62C822324E5F000C67C1 /* MotionView.swift */; };
-		2B4E62DB2232E907000C67C1 /* ButtonPadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4E62CA22324E5F000C67C1 /* ButtonPadView.swift */; };
-		2B4E62DC2232E909000C67C1 /* ButtonIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4E62CB22324E5F000C67C1 /* ButtonIndicatorView.swift */; };
+		2B4E62DE2232F55B000C67C1 /* ExtendedGamepad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4E62DD2232F55B000C67C1 /* ExtendedGamepad.swift */; };
+		2B4E62E0223302D5000C67C1 /* Gamepad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4E62DF223302D5000C67C1 /* Gamepad.swift */; };
 		2BA95867222CE3D0008E205B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA95866222CE3D0008E205B /* AppDelegate.swift */; };
 		2BA95869222CE3D0008E205B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA95868222CE3D0008E205B /* ViewController.swift */; };
 		2BA9586B222CE3D1008E205B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BA9586A222CE3D1008E205B /* Assets.xcassets */; };
@@ -31,6 +26,8 @@
 		2B4E62CB22324E5F000C67C1 /* ButtonIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonIndicatorView.swift; sourceTree = "<group>"; };
 		2B4E62D122324E7D000C67C1 /* ExtendedGamepadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtendedGamepadView.swift; sourceTree = "<group>"; };
 		2B4E62D322324E9B000C67C1 /* GamepadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamepadView.swift; sourceTree = "<group>"; };
+		2B4E62DD2232F55B000C67C1 /* ExtendedGamepad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedGamepad.swift; sourceTree = "<group>"; };
+		2B4E62DF223302D5000C67C1 /* Gamepad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gamepad.swift; sourceTree = "<group>"; };
 		2BA95863222CE3D0008E205B /* ArduinoBluetooth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArduinoBluetooth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA95866222CE3D0008E205B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2BA95868222CE3D0008E205B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -61,6 +58,8 @@
 				2BA95898222E0D70008E205B /* GameController.swift */,
 				2B4E62D322324E9B000C67C1 /* GamepadView.swift */,
 				2B4E62D122324E7D000C67C1 /* ExtendedGamepadView.swift */,
+				2B4E62DD2232F55B000C67C1 /* ExtendedGamepad.swift */,
+				2B4E62DF223302D5000C67C1 /* Gamepad.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -200,18 +199,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B4E62D92232E8FE000C67C1 /* XYPositionView.swift in Sources */,
 				2BA95869222CE3D0008E205B /* ViewController.swift in Sources */,
 				2B4E62D52232E8F0000C67C1 /* GameController.swift in Sources */,
-				2B4E62DB2232E907000C67C1 /* ButtonPadView.swift in Sources */,
-				2B4E62D82232E8FA000C67C1 /* DirectionPadView.swift in Sources */,
 				2BA95893222CE431008E205B /* BTService.swift in Sources */,
 				2BA95892222CE431008E205B /* BTDiscovery.swift in Sources */,
-				2B4E62DA2232E901000C67C1 /* MotionView.swift in Sources */,
-				2B4E62DC2232E909000C67C1 /* ButtonIndicatorView.swift in Sources */,
-				2B4E62D62232E8F3000C67C1 /* GamepadView.swift in Sources */,
+				2B4E62DE2232F55B000C67C1 /* ExtendedGamepad.swift in Sources */,
+				2B4E62E0223302D5000C67C1 /* Gamepad.swift in Sources */,
 				2BA95867222CE3D0008E205B /* AppDelegate.swift in Sources */,
-				2B4E62D72232E8F6000C67C1 /* ExtendedGamepadView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
