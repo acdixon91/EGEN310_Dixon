@@ -9,6 +9,7 @@
 import Cocoa
 import AppKit
 import Foundation
+import GameController
 
 class ViewController: NSViewController {
     
@@ -88,6 +89,8 @@ class ViewController: NSViewController {
             }
         });
     }
+    
+     
     
     func sendPosition(_ position: Data) {
         // Valid position range: 0 to 180

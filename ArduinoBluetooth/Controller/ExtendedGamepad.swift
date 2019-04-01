@@ -70,23 +70,22 @@ public class ExtendedGamePad{
         }
     }
     
+    
+
     @objc func sendTimer() {
         print("sendTimer fired")
         self.allowTX = true
         stopTimerTXDelay()
         let snapshot = gamepad?.saveSnapshot()
         print("right thumb stick in snapshot is: \(String(describing: snapshot?.rightThumbstick.xAxis.value))")
-        
-        
     }
+    
     
     func stopTimerTXDelay(){
         if self.timerTXDelay == nil{
             return
         }
-        
         timerTXDelay?.invalidate()
         self.timerTXDelay = nil
     }
-    
 }
