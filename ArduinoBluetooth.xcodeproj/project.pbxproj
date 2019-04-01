@@ -20,13 +20,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2B4E62C622324E5F000C67C1 /* DirectionPadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectionPadView.swift; sourceTree = "<group>"; };
-		2B4E62C722324E5F000C67C1 /* XYPositionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XYPositionView.swift; sourceTree = "<group>"; };
-		2B4E62C822324E5F000C67C1 /* MotionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotionView.swift; sourceTree = "<group>"; };
-		2B4E62CA22324E5F000C67C1 /* ButtonPadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonPadView.swift; sourceTree = "<group>"; };
-		2B4E62CB22324E5F000C67C1 /* ButtonIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonIndicatorView.swift; sourceTree = "<group>"; };
-		2B4E62D122324E7D000C67C1 /* ExtendedGamepadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtendedGamepadView.swift; sourceTree = "<group>"; };
-		2B4E62D322324E9B000C67C1 /* GamepadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamepadView.swift; sourceTree = "<group>"; };
 		2B4E62DD2232F55B000C67C1 /* ExtendedGamepad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedGamepad.swift; sourceTree = "<group>"; };
 		2B4E62DF223302D5000C67C1 /* Gamepad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gamepad.swift; sourceTree = "<group>"; };
 		2BA95863222CE3D0008E205B /* ArduinoBluetooth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArduinoBluetooth.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,34 +49,11 @@
 		2B4E62C422324E35000C67C1 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				2B4E62C522324E5F000C67C1 /* Detail Views */,
 				2BA95898222E0D70008E205B /* GameController.swift */,
-				2B4E62D322324E9B000C67C1 /* GamepadView.swift */,
-				2B4E62D122324E7D000C67C1 /* ExtendedGamepadView.swift */,
 				2B4E62DD2232F55B000C67C1 /* ExtendedGamepad.swift */,
 				2B4E62DF223302D5000C67C1 /* Gamepad.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		2B4E62C522324E5F000C67C1 /* Detail Views */ = {
-			isa = PBXGroup;
-			children = (
-				2B4E62C622324E5F000C67C1 /* DirectionPadView.swift */,
-				2B4E62C722324E5F000C67C1 /* XYPositionView.swift */,
-				2B4E62C822324E5F000C67C1 /* MotionView.swift */,
-				2B4E62C922324E5F000C67C1 /* Buttons and Switches */,
-			);
-			path = "Detail Views";
-			sourceTree = "<group>";
-		};
-		2B4E62C922324E5F000C67C1 /* Buttons and Switches */ = {
-			isa = PBXGroup;
-			children = (
-				2B4E62CA22324E5F000C67C1 /* ButtonPadView.swift */,
-				2B4E62CB22324E5F000C67C1 /* ButtonIndicatorView.swift */,
-			);
-			path = "Buttons and Switches";
 			sourceTree = "<group>";
 		};
 		2BA9585A222CE3D0008E205B = {

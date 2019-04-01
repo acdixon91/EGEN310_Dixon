@@ -43,11 +43,11 @@ class GameController : NSObject{
         let name = String(describing:controller.vendorName)
         if let gamepad = controller.extendedGamepad {
             print("connect extended \(name)")
-            let exController = ExtendedGamePad.init(gamepad: gamepad)
+            _ = ExtendedGamePad.init(gamepad: gamepad)
             
         } else if let gamepad = controller.gamepad {
             print("connected gamepad \(name)")
-            GamePad.init(gamepad: gamepad)
+            _ = GamePad.init(gamepad: gamepad)
         } else {
             print("Huh? \(name)")
         }

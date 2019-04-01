@@ -12,6 +12,7 @@ import GameKit
 
 public class ExtendedGamePad{
     
+    var btCom = BTCommunication()
     private var timerTXDelay : Timer?
     private var allowTX = true
     public var gamepad : GCExtendedGamepad? {
@@ -77,6 +78,7 @@ public class ExtendedGamePad{
         self.allowTX = true
         stopTimerTXDelay()
         let snapshot = gamepad?.saveSnapshot()
+        btCom.sendRemoteData(snapshot!)
         print("right thumb stick in snapshot is: \(String(describing: snapshot?.rightThumbstick.xAxis.value))")
     }
     

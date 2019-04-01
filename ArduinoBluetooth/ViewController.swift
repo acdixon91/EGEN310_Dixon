@@ -15,29 +15,28 @@ class ViewController: NSViewController {
     
     @IBOutlet weak var transmit: NSButton!
     
-    var timerTXDelay: Timer?
-    var allowTX = true
-    var lastPosition: UInt8 = 255
+//    var timerTXDelay: Timer?
+//    var allowTX = true
+//    var lastPosition: UInt8 = 255
     var buffer: [Data?] = []
     var inBuffer = false
-    var previousData: Data?
+//    var previousData: Data?
+    var btCom = BTCommunication()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        GameController.init()
+        _ = GameController()
         // Watch Bluetooth connection
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.connectionChanged(_:)), name: NSNotification.Name(rawValue: BLEServiceChangedStatusNotification), object: nil)
         
         // Start the Bluetooth discovery process
         _ = btDiscoverySharedInstance
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: BLEServiceChangedStatusNotification), object: nil)
     }
-    
-    
     
     @IBAction func send(_ sender: NSButton) {
         print("button pressed: \(sender.alternateTitle)")
@@ -46,7 +45,9 @@ class ViewController: NSViewController {
         //to prevent lag, the momment button is pushed it is transmitted
         print("initString sent - \"state on\"")
         let initString = ("!B\(sender.tag)\(true)\"$" as NSString).data(using: String.Encoding.utf8.rawValue)
-        sendPosition(initString!)
+        
+        //changed to calling to btCommunication instead of function inside class
+        btCom.sendPosition(initString!)
         
         if(sender.state == .on ){
             message = "!B\(sender.tag)\(true)\"$"
@@ -57,18 +58,12 @@ class ViewController: NSViewController {
             //on quick clicks, it only sends the state value of off
             print("state on")
             let finalOnState = ("!B\(sender.tag)\(true)\"$" as NSString).data(using: String.Encoding.utf8.rawValue)
-            sendPosition(finalOnState!)
+            btCom.sendPosition(finalOnState!)
             sender.state = .on  //needs to turn state back to on
             print("state off")
         }
         let valueString = (message as NSString).data(using: String.Encoding.utf8.rawValue)
-        sendPosition(valueString!)
-        
-        
-//        if let data = UInt8(sender.tag){
-//            print("made it into if let loop")
-//            sendPosition(data)
-//        }
+        btCom.sendPosition(valueString!)
     }
     
     @objc func connectionChanged(_ notification: Notification) {
@@ -92,55 +87,55 @@ class ViewController: NSViewController {
     
      
     
-    func sendPosition(_ position: Data) {
-        // Valid position range: 0 to 180
-        print("made it to sendPosition")
-        print(allowTX)
-        if !allowTX {
-            if(position != previousData){
-                buffer.append(position)
-                inBuffer = true
-            }
-            return
-        }
-        
-        // Send position to BLE Shield (if service exists and is connected)
-        if let bleService = btDiscoverySharedInstance.bleService {
-            print("sending location")
-            bleService.writeData(position)
-            previousData = position
-            
-            // Start delay timer
-            allowTX = false
-            if timerTXDelay == nil {
-                timerTXDelay = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(ViewController.timerTXDelayElapsed), userInfo: nil, repeats: false)
-            }
-        }
-    }
-    
-    @objc func timerTXDelayElapsed() {
-        self.allowTX = true
-        self.stopTimerTXDelay()
-        
-        // Send buffer data
-        if inBuffer == true {
-            sendPosition(buffer.removeFirst()!)
-            if(buffer.isEmpty){
-                inBuffer = false
-            }
-        }
-    }
-    
-    func stopTimerTXDelay() {
-        if self.timerTXDelay == nil {
-            return
-        }
-        
-        timerTXDelay?.invalidate()
-        self.timerTXDelay = nil
-    }
+//    func sendPosition(_ position: Data) {
+//        // Valid position range: 0 to 180
+//        print("made it to sendPosition")
+//        print(allowTX)
+//        if !allowTX {
+//            if(position != previousData){
+//                buffer.append(position)
+//                inBuffer = true
+//            }
+//            return
+//        }
+//
+//        // Send position to BLE Shield (if service exists and is connected)
+//        if let bleService = btDiscoverySharedInstance.bleService {
+//            print("sending location")
+//            bleService.writeData(position)
+//            previousData = position
+//
+//            // Start delay timer
+//            allowTX = false
+//            if timerTXDelay == nil {
+//                timerTXDelay = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(ViewController.timerTXDelayElapsed), userInfo: nil, repeats: false)
+//            }
+//        }
+//    }
+//
+//    @objc func timerTXDelayElapsed() {
+//        self.allowTX = true
+//        self.stopTimerTXDelay()
+//
+//        // Send buffer data
+//        if inBuffer == true {
+//            sendPosition(buffer.removeFirst()!)
+//            if(buffer.isEmpty){
+//                inBuffer = false
+//            }
+//        }
+//    }
+//
+//    func stopTimerTXDelay() {
+//        if self.timerTXDelay == nil {
+//            return
+//        }
+//
+//        timerTXDelay?.invalidate()
+//        self.timerTXDelay = nil
+//    }
 }
-        
+
 
 
 
