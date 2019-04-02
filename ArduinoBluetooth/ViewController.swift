@@ -44,20 +44,23 @@ class ViewController: NSViewController {
         
         //to prevent lag, the momment button is pushed it is transmitted
         print("initString sent - \"state on\"")
-        let initString = ("!B\(sender.tag)\(true)\"$" as NSString).data(using: String.Encoding.utf8.rawValue)
-        
+//        let initString = ("!B\(sender.tag)\(true)\"$" as NSString).data(using: String.Encoding.utf8.rawValue)
+        let initString = ("tttt" as NSString).data(using: String.Encoding.utf8.rawValue)
         //changed to calling to btCommunication instead of function inside class
         btCom.sendPosition(initString!)
         
         if(sender.state == .on ){
-            message = "!B\(sender.tag)\(true)\"$"
+            message = "tttt"
+            //message = "!B\(sender.tag)\(true)\"$"
             print("state on")
         }
         else if(sender.state == .off){
-            message = "!B\(sender.tag)\(false)\"$"
+            message = "tttt"
+            //message = "!B\(sender.tag)\(false)\"$"
             //on quick clicks, it only sends the state value of off
             print("state on")
-            let finalOnState = ("!B\(sender.tag)\(true)\"$" as NSString).data(using: String.Encoding.utf8.rawValue)
+            let finalOnState = ("tttt" as NSString).data(using: String.Encoding.utf8.rawValue)
+//            let finalOnState = ("!B\(sender.tag)\(true)\"$" as NSString).data(using: String.Encoding.utf8.rawValue)
             btCom.sendPosition(finalOnState!)
             sender.state = .on  //needs to turn state back to on
             print("state off")
