@@ -19,14 +19,17 @@ class BTCommunication {
     var previousData: Data?
     
     func sendRemoteData(_ position : GCExtendedGamepadSnapshot){
-        let leftTrigger = position.leftTrigger
-        let rightTrigger = position.rightTrigger
-        let leftThumbStick = position.leftThumbstick
-        let rightThumbStick = position.rightThumbstick
-        let dPad = position.dpad
+        print("sending remote data ----->")
+        let leftTrigger = String(format: "%.2f", position.leftTrigger.value)
+        let rightTrigger = String(format: "%.2f", position.rightTrigger.value)
+        let leftThumbStick = String(format: "%.2f", position.leftThumbstick.xAxis.value)
+        let rightThumbStick = String(format: "%.2f", position.rightThumbstick.xAxis.value)
+        let dPad = String(format: "%.2f", position.dpad.xAxis.value)
         
-        let totalPos = "!ltr\(leftTrigger.value)rtr\(rightTrigger.value)lth\(leftThumbStick.xAxis.value)rth\(rightThumbStick.xAxis.value)dpa\(dPad.xAxis.value)"
-        let totalPosData = totalPos.data(using: String.Encoding.utf8)
+//        var totalPos = "this is a test " as NSString
+        let totalPos = "!ltr:\(leftTrigger)rtr:\(rightTrigger)lth:\(leftThumbStick)rth:\(rightThumbStick)dpa:\(dPad)" as NSString
+        print(totalPos)
+        let totalPosData = totalPos.data(using: String.Encoding.utf8.rawValue)
         
         sendPosition(totalPosData!)
     }
