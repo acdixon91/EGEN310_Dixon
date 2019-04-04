@@ -86,6 +86,15 @@ void error(const __FlashStringHelper*err) {
   while (1);
 }
 
+
+// function prototypes over in packetparser.cpp
+uint8_t readPacket(Adafruit_BLE *ble, uint16_t timeout);
+float parsefloat(uint8_t *buffer);
+void printHex(const uint8_t * data, const uint32_t numBytes);
+
+// the packet buffer
+extern uint8_t packetbuffer[];
+
 int LED = 13;
 
 /**************************************************************************/
@@ -148,6 +157,11 @@ void setup(void)
     ble.sendCommandCheckOK("AT+HWModeLED=" MODE_LED_BEHAVIOUR);
     Serial.println(F("******************************"));
   }
+
+    // Set module to DATA mode
+  Serial.println( F("Switching to DATA mode!") );
+  ble.setMode(BLUEFRUIT_MODE_DATA);
+  
   pinMode(LED, OUTPUT);     // Set pin as an output
   digitalWrite(LED, LOW);
 }
@@ -159,65 +173,46 @@ void setup(void)
 /**************************************************************************/
 void loop(void)
 {
-  // Check for user input
-  char inputs[BUFSIZE+1];
+ 
+  /* Wait for new data to arrive */
+  uint8_t len = readPacket(&ble, BLE_READPACKET_TIMEOUT);
+  if (len == 0) return;
 
-  if ( getUserInput(inputs, BUFSIZE) )
-  {
-    // Send characters to Bluefruit
-    Serial.print("[Send] ");
-    Serial.println(inputs);
-
-    ble.print("AT+BLEUARTTX=");
-    ble.println(inputs);
-
-    // check response stastus
-    if (! ble.waitForOK() ) {
-      Serial.println(F("Failed to send?"));
+  Serial.println("incoming data");
+  
+//    App Data
+    if (packetbuffer[1] == 'B') {
+    int i = 0;
+    while (i < len) {
+      Serial.print((char)packetbuffer[i]);
+      i++;
     }
+    Serial.println();
+    Serial.println("----------------------------");
   }
 
-  // Check for incoming characters from Bluefruit
-  ble.println("AT+BLEUARTRX");
-  ble.readline();
-  if (strcmp(ble.buffer, "OK") == 0) {
-    // no data
-    return;
+//    First part of Controller data
+// Controller input
+  if (packetbuffer[1] == 'C') {
+    int i = 0;
+    while (i < len) {
+      Serial.print((char)packetbuffer[i]);
+      i++;
+    }
+    Serial.println();
+    Serial.println("----------------------------");
   }
-  // Some data was found, its in the buffer
-  Serial.print(F("[Recv] ")); Serial.println(ble.buffer);
-  ble.waitForOK();
 
-  if (ble.buffer[3] == 't'){
-    digitalWrite(LED, LOW);
-  }
-  else{
-    digitalWrite(LED, HIGH);
+//    Second part of Controller data
+// Controller input
+  if (packetbuffer[1] == 'D') {
+    int i = 0;
+    while (i < len) {
+      Serial.print((char)packetbuffer[i]);
+      i++;
+    }
+    Serial.println();
+    Serial.println("----------------------------");
   }
 }
-
-/**************************************************************************/
-/*!
-    @brief  Checks for user input (via the Serial Monitor)
-*/
-/**************************************************************************/
-bool getUserInput(char buffer[], uint8_t maxSize)
-{
-  // timeout in 100 milliseconds
-  TimeoutTimer timeout(100);
-
-  memset(buffer, 0, maxSize);
-  while( (!Serial.available()) && !timeout.expired() ) { delay(1); }
-
-  if ( timeout.expired() ) return false;
-
-  delay(2);
-  uint8_t count=0;
-  do
-  {
-    count += Serial.readBytes(buffer+count, maxSize);
-    delay(2);
-  } while( (count < maxSize) && (Serial.available()) );
-
-  return true;
-}
+  

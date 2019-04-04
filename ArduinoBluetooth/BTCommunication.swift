@@ -26,12 +26,15 @@ class BTCommunication {
         let rightThumbStick = String(format: "%.2f", position.rightThumbstick.xAxis.value)
         let dPad = String(format: "%.2f", position.dpad.xAxis.value)
         
-//        var totalPos = "this is a test " as NSString
-        let totalPos = "!ltr:\(leftTrigger)rtr:\(rightTrigger)lth:\(leftThumbStick)rth:\(rightThumbStick)dpa:\(dPad)" as NSString
-        print(totalPos)
-        let totalPosData = totalPos.data(using: String.Encoding.utf8.rawValue)
-        
-        sendPosition(totalPosData!)
+//        let totalPos = "!Cltr:$" as NSString
+        let firstPos = "!C:lf\(leftTrigger):rt\(rightTrigger)$" as NSString
+        let secondPos = "!D:ls\(leftThumbStick):rs\(rightThumbStick)$" as NSString
+        print(firstPos)
+        print(secondPos)
+        let firstPosData = firstPos.data(using: String.Encoding.utf8.rawValue)
+        let secondPosData = secondPos.data(using: String.Encoding.utf8.rawValue)
+        sendPosition(firstPosData!)
+        sendPosition(secondPosData!)
     }
     
     func sendPosition(_ position: Data) {
@@ -57,7 +60,7 @@ class BTCommunication {
             // Start delay timer
             allowTX = false
             if timerTXDelay == nil {
-                timerTXDelay = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(BTCommunication.timerTXDelayElapsed), userInfo: nil, repeats: false)
+                timerTXDelay = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(BTCommunication.timerTXDelayElapsed), userInfo: nil, repeats: false)
             }
         }
     }
@@ -69,6 +72,7 @@ class BTCommunication {
         // Send buffer data
         if inBuffer == true {
             sendPosition(buffer.removeFirst()!)
+            buffer.removeAll()
             if(buffer.isEmpty){
                 inBuffer = false
             }

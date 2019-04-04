@@ -30,32 +30,32 @@ public class ExtendedGamePad{
         
         //dpad
         gamepad?.dpad.valueChangedHandler = { (dpad, xValue, yValue) in
-            print("DPAD : \( dpad )")
+//            print("DPAD : \( dpad )")
             self.timerCheck()
         }
         
         //left thumbstick
         gamepad?.leftThumbstick.valueChangedHandler = { (leftThumbstick, xValue, yValue) in
-            print("Left Thumbstick : \( leftThumbstick )")
+//            print("Left Thumbstick : \( leftThumbstick )")
             self.timerCheck()
         }
         
         //right thumbstick
         gamepad?.rightThumbstick.valueChangedHandler = { (rightThumbstick, xValue, yValue) in
-            print("Right Thumbstick : \( rightThumbstick )")
+//            print("Right Thumbstick : \( rightThumbstick )")
             self.timerCheck()
         }
         
         //right trigger
         gamepad?.rightTrigger.valueChangedHandler = { (rightTrigger, value, pressed) in
-            print("Right Trigger : \( rightTrigger )")
+//            print("Right Trigger : \( rightTrigger )")
 
             self.timerCheck()
         }
         
         //left trigger
         gamepad?.leftTrigger.valueChangedHandler = { (leftTrigger, value, pressed) in
-            print("Left Trigger : \( leftTrigger )")
+//            print("Left Trigger : \( leftTrigger )")
             self.timerCheck()
         }
     }
@@ -66,7 +66,7 @@ public class ExtendedGamePad{
         if self.allowTX == true {
             self.allowTX = false
             if timerTXDelay == nil {
-                timerTXDelay = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(sendTimer), userInfo: nil, repeats: false)
+                timerTXDelay = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(sendTimer), userInfo: nil, repeats: false)
             }
         }
     }
@@ -79,7 +79,7 @@ public class ExtendedGamePad{
         stopTimerTXDelay()
         let snapshot = gamepad?.saveSnapshot()
         btCom.sendRemoteData(snapshot!)
-        print("right thumb stick in snapshot is: \(String(describing: snapshot?.rightThumbstick.xAxis.value))")
+//        print("right thumb stick in snapshot is: \(String(describing: snapshot?.rightThumbstick.xAxis.value))")
     }
     
     
