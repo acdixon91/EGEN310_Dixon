@@ -2,8 +2,7 @@
 //  BTService.swift
 //  Arduino_Servo
 //
-//  Created by Owen L Brown on 10/11/14.
-//  Copyright (c) 2014 Razeware LLC. All rights reserved.
+//  Created by Andrew Dixon
 //
 
 import Foundation

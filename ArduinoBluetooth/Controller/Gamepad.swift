@@ -24,10 +24,7 @@ public class GamePad{
     }
     
     func assignGamepad() {
-        print("made it to assignGamepad")
-        
-        
-        gamepad?.valueChangedHandler = { (gamepad, element) in
+      gamepad?.valueChangedHandler = { (gamepad, element) in
             if let dpad = element as? GCControllerDirectionPad {
                 print("CTRL : \( dpad )")
             } else {
@@ -35,5 +32,4 @@ public class GamePad{
             }
         }
     }
-    
 }

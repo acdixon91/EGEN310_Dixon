@@ -21,41 +21,37 @@ public class ExtendedGamePad{
         }
     }
     
+    
     public init(gamepad: GCExtendedGamepad) {
         self.gamepad = gamepad
         gamepadInputs()
     }
 
+    
     func gamepadInputs() {
-        
         //dpad
         gamepad?.dpad.valueChangedHandler = { (dpad, xValue, yValue) in
-//            print("DPAD : \( dpad )")
             self.timerCheck()
         }
         
         //left thumbstick
         gamepad?.leftThumbstick.valueChangedHandler = { (leftThumbstick, xValue, yValue) in
-//            print("Left Thumbstick : \( leftThumbstick )")
             self.timerCheck()
         }
         
         //right thumbstick
         gamepad?.rightThumbstick.valueChangedHandler = { (rightThumbstick, xValue, yValue) in
-//            print("Right Thumbstick : \( rightThumbstick )")
             self.timerCheck()
         }
         
         //right trigger
         gamepad?.rightTrigger.valueChangedHandler = { (rightTrigger, value, pressed) in
-//            print("Right Trigger : \( rightTrigger )")
 
             self.timerCheck()
         }
         
         //left trigger
         gamepad?.leftTrigger.valueChangedHandler = { (leftTrigger, value, pressed) in
-//            print("Left Trigger : \( leftTrigger )")
             self.timerCheck()
         }
     }
@@ -71,15 +67,12 @@ public class ExtendedGamePad{
         }
     }
     
-    
 
     @objc func sendTimer() {
-        print("sendTimer fired")
         self.allowTX = true
         stopTimerTXDelay()
         let snapshot = gamepad?.saveSnapshot()
         btCom.sendRemoteData(snapshot!)
-//        print("right thumb stick in snapshot is: \(String(describing: snapshot?.rightThumbstick.xAxis.value))")
     }
     
     

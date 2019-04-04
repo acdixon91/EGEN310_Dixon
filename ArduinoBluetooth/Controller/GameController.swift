@@ -42,7 +42,7 @@ class GameController : NSObject{
     func add(_ controller: GCController) {
         let name = String(describing:controller.vendorName)
         if let gamepad = controller.extendedGamepad {
-            print("connect extended \(name)")
+            print("Connected to extended controller: \(name)")
             _ = ExtendedGamePad.init(gamepad: gamepad)
             
         } else if let gamepad = controller.gamepad {
