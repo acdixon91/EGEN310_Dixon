@@ -22,7 +22,10 @@
 /* Begin PBXFileReference section */
 		2B4E62DD2232F55B000C67C1 /* ExtendedGamepad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedGamepad.swift; sourceTree = "<group>"; };
 		2B4E62DF223302D5000C67C1 /* Gamepad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gamepad.swift; sourceTree = "<group>"; };
-		2BA95863222CE3D0008E205B /* ArduinoBluetooth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArduinoBluetooth.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B6741A022558E8600555AB4 /* EGEN310_Semester_Project.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EGEN310_Semester_Project.entitlements; sourceTree = "<group>"; };
+		2B6741A122558E8600555AB4 /* EGEN310_Semester_Project.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EGEN310_Semester_Project.entitlements; sourceTree = "<group>"; };
+		2B6741A222558E8600555AB4 /* EGEN310_Semester_Project.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EGEN310_Semester_Project.entitlements; sourceTree = "<group>"; };
+		2BA95863222CE3D0008E205B /* EGEN310_Semester_Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EGEN310_Semester_Project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA95866222CE3D0008E205B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2BA95868222CE3D0008E205B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2BA9586A222CE3D1008E205B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -59,7 +62,10 @@
 		2BA9585A222CE3D0008E205B = {
 			isa = PBXGroup;
 			children = (
-				2BA95865222CE3D0008E205B /* ArduinoBluetooth */,
+				2B6741A222558E8600555AB4 /* EGEN310_Semester_Project.entitlements */,
+				2B6741A122558E8600555AB4 /* EGEN310_Semester_Project.entitlements */,
+				2B6741A022558E8600555AB4 /* EGEN310_Semester_Project.entitlements */,
+				2BA95865222CE3D0008E205B /* Code */,
 				2BA95864222CE3D0008E205B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -67,42 +73,42 @@
 		2BA95864222CE3D0008E205B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2BA95863222CE3D0008E205B /* ArduinoBluetooth.app */,
+				2BA95863222CE3D0008E205B /* EGEN310_Semester_Project.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2BA95865222CE3D0008E205B /* ArduinoBluetooth */ = {
+		2BA95865222CE3D0008E205B /* Code */ = {
 			isa = PBXGroup;
 			children = (
 				2B4E62C422324E35000C67C1 /* Controller */,
-				2BA95889222CE431008E205B /* Classes */,
+				2BA95889222CE431008E205B /* Bluetooth */,
 				2BA95866222CE3D0008E205B /* AppDelegate.swift */,
 				2BA95868222CE3D0008E205B /* ViewController.swift */,
-				2BC171972251900100C21A6F /* BTCommunication.swift */,
 				2BA9586A222CE3D1008E205B /* Assets.xcassets */,
 				2BA9586C222CE3D1008E205B /* Main.storyboard */,
 				2BA9586F222CE3D1008E205B /* Info.plist */,
 				2BA95870222CE3D1008E205B /* ArduinoBluetooth.entitlements */,
 			);
-			path = ArduinoBluetooth;
+			path = Code;
 			sourceTree = "<group>";
 		};
-		2BA95889222CE431008E205B /* Classes */ = {
+		2BA95889222CE431008E205B /* Bluetooth */ = {
 			isa = PBXGroup;
 			children = (
+				2BC171972251900100C21A6F /* BTCommunication.swift */,
 				2BA9588A222CE431008E205B /* BTDiscovery.swift */,
 				2BA9588B222CE431008E205B /* BTService.swift */,
 			);
-			path = Classes;
+			path = Bluetooth;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2BA95862222CE3D0008E205B /* ArduinoBluetooth */ = {
+		2BA95862222CE3D0008E205B /* EGEN310_Semester_Project */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2BA95873222CE3D1008E205B /* Build configuration list for PBXNativeTarget "ArduinoBluetooth" */;
+			buildConfigurationList = 2BA95873222CE3D1008E205B /* Build configuration list for PBXNativeTarget "EGEN310_Semester_Project" */;
 			buildPhases = (
 				2BA9585F222CE3D0008E205B /* Sources */,
 				2BA95860222CE3D0008E205B /* Frameworks */,
@@ -112,9 +118,9 @@
 			);
 			dependencies = (
 			);
-			name = ArduinoBluetooth;
+			name = EGEN310_Semester_Project;
 			productName = ArduinoBluetooth;
-			productReference = 2BA95863222CE3D0008E205B /* ArduinoBluetooth.app */;
+			productReference = 2BA95863222CE3D0008E205B /* EGEN310_Semester_Project.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -137,7 +143,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2BA9585E222CE3D0008E205B /* Build configuration list for PBXProject "ArduinoBluetooth" */;
+			buildConfigurationList = 2BA9585E222CE3D0008E205B /* Build configuration list for PBXProject "EGEN310_Semester_Project" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -150,7 +156,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2BA95862222CE3D0008E205B /* ArduinoBluetooth */,
+				2BA95862222CE3D0008E205B /* EGEN310_Semester_Project */,
 			);
 		};
 /* End PBXProject section */
@@ -316,17 +322,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ArduinoBluetooth/ArduinoBluetooth.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = SG6Y9Y3C78;
-				INFOPLIST_FILE = ArduinoBluetooth/Info.plist;
+				INFOPLIST_FILE = Code/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = AD.ArduinoBluetooth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
@@ -335,17 +342,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ArduinoBluetooth/ArduinoBluetooth.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = SG6Y9Y3C78;
-				INFOPLIST_FILE = ArduinoBluetooth/Info.plist;
+				INFOPLIST_FILE = Code/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = AD.ArduinoBluetooth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
@@ -353,7 +361,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2BA9585E222CE3D0008E205B /* Build configuration list for PBXProject "ArduinoBluetooth" */ = {
+		2BA9585E222CE3D0008E205B /* Build configuration list for PBXProject "EGEN310_Semester_Project" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2BA95871222CE3D1008E205B /* Debug */,
@@ -362,7 +370,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2BA95873222CE3D1008E205B /* Build configuration list for PBXNativeTarget "ArduinoBluetooth" */ = {
+		2BA95873222CE3D1008E205B /* Build configuration list for PBXNativeTarget "EGEN310_Semester_Project" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2BA95874222CE3D1008E205B /* Debug */,
