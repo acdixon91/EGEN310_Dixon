@@ -26,9 +26,9 @@ class BTCommunication {
     /// - Parameter position: A snapshot of all inputs on the controller, taken every 1ms
     func sendRemoteData(_ position : GCExtendedGamepadSnapshot){
         print("Sending Controller data ----->")
-        let leftTrigger = String(format: "%.2f", position.leftTrigger.value)
-        let rightTrigger = String(format: "%.2f", position.rightTrigger.value)
-        let leftThumbStick = String(format: "%.2f", position.leftThumbstick.xAxis.value + 1 )
+        let leftTrigger = String(format: "%.0f", position.leftTrigger.value * 100)
+        let rightTrigger = String(format: "%.0f", position.rightTrigger.value * 100)
+        let leftThumbStick = String(format: "%.2f", position.leftThumbstick.xAxis.value + 1)
         let rightThumbStick = String(format: "%.2f", position.rightThumbstick.xAxis.value + 1)
 
         let firstPos = "!C:lt\(leftTrigger):rs\(rightThumbStick)$" as NSString
