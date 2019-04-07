@@ -31,7 +31,7 @@ class BTCommunication {
         let leftThumbStick = String(format: "%.2f", position.leftThumbstick.xAxis.value)
         let rightThumbStick = String(format: "%.2f", position.rightThumbstick.xAxis.value)
 
-        let firstPos = "!C:lf\(leftTrigger):rs\(rightThumbStick)$" as NSString
+        let firstPos = "!C:lt\(leftTrigger):rs\(rightThumbStick)$" as NSString
         let secondPos = "!D:rt\(rightTrigger):ls\(leftThumbStick)$" as NSString
 
         
