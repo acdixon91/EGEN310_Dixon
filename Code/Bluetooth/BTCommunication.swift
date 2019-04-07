@@ -28,8 +28,8 @@ class BTCommunication {
         print("Sending Controller data ----->")
         let leftTrigger = String(format: "%.2f", position.leftTrigger.value)
         let rightTrigger = String(format: "%.2f", position.rightTrigger.value)
-        let leftThumbStick = String(format: "%.2f", position.leftThumbstick.xAxis.value)
-        let rightThumbStick = String(format: "%.2f", position.rightThumbstick.xAxis.value)
+        let leftThumbStick = String(format: "%.2f", position.leftThumbstick.xAxis.value + 1 )
+        let rightThumbStick = String(format: "%.2f", position.rightThumbstick.xAxis.value + 1)
 
         let firstPos = "!C:lt\(leftTrigger):rs\(rightThumbStick)$" as NSString
         let secondPos = "!D:rt\(rightTrigger):ls\(leftThumbStick)$" as NSString
