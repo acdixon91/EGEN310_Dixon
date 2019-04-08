@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -706,38 +707,11 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="EGEN310_Semester_Project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="695" height="313"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n0o-oN-tBq">
-                                <rect key="frame" x="163" y="119" width="154" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Backward" alternateTitle="Backward" bezelStyle="rounded" alignment="center" continuous="YES" state="on" borderStyle="border" tag="1" imageScaling="proportionallyDown" inset="2" id="RqH-eJ-Flu">
-                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="send:" target="XfG-lQ-9wD" id="f4v-uB-wZQ"/>
-                                </connections>
-                            </button>
-                            <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fxd-Xh-Q3D">
-                                <rect key="frame" x="89" y="42" width="303" height="19"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="KLr-ij-83W"/>
-                            </slider>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="trf-xT-B0W">
-                                <rect key="frame" x="163" y="175" width="154" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Forward" alternateTitle="Forward" bezelStyle="rounded" alignment="center" continuous="YES" state="on" borderStyle="border" tag="1" inset="2" id="mhI-ry-kL3">
-                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="send:" target="XfG-lQ-9wD" id="Li1-6r-Qvy"/>
-                                </connections>
-                            </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BBv-al-dlI">
-                                <rect key="frame" x="0.0" y="76" width="480" height="17"/>
+                                <rect key="frame" x="107" y="365" width="480" height="17"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Power Control" id="bRd-dQ-ppK">
                                     <font key="font" metaFont="system"/>
@@ -745,15 +719,69 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k6g-8B-vXl" colorLabel="IBBuiltInLabel-Purple">
+                                <rect key="frame" x="205" y="90" width="59" height="23"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSBluetoothTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" inset="2" id="36E-WY-WDa">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <color key="contentTintColor" name="selectedContentBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z69-I0-OZ8">
+                                <rect key="frame" x="374" y="90" width="139" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="roundTextured" title="Remote Controller" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XdX-vh-J1I">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <box fixedFrame="YES" title="Digital Controller" translatesAutoresizingMaskIntoConstraints="NO" id="7nb-0s-y9f">
+                                <rect key="frame" x="194" y="124" width="306" height="178"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <view key="contentView" id="xy7-d5-gq6">
+                                    <rect key="frame" x="3" y="3" width="300" height="160"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n0o-oN-tBq">
+                                            <rect key="frame" x="73" y="46" width="154" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="push" title="Backward" alternateTitle="Backward" bezelStyle="rounded" alignment="center" continuous="YES" state="on" borderStyle="border" tag="1" imageScaling="proportionallyDown" inset="2" id="RqH-eJ-Flu">
+                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="send:" target="XfG-lQ-9wD" id="f4v-uB-wZQ"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="trf-xT-B0W">
+                                            <rect key="frame" x="73" y="104" width="154" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="push" title="Forward" alternateTitle="Forward" bezelStyle="rounded" alignment="center" continuous="YES" state="on" borderStyle="border" tag="1" inset="2" id="mhI-ry-kL3">
+                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="send:" target="XfG-lQ-9wD" id="Li1-6r-Qvy"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </view>
+                            </box>
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="bluetoothSwitch" destination="k6g-8B-vXl" id="cXG-AG-Nlp"/>
+                        <outlet property="controllerSwitch" destination="z69-I0-OZ8" id="70q-NR-rab"/>
                         <outlet property="transmit" destination="trf-xT-B0W" id="Zx2-jq-fvS"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="182.5" y="676.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="NSBluetoothTemplate" width="7" height="14"/>
+    </resources>
 </document>

@@ -1,8 +1,9 @@
 //
 //  BTDiscovery.swift
-//  Arduino_Servo
+//  ArduinoBluetooth
 //
-//  Created by Andrew Dixon
+//  Created by Andrew Dixon on 2/04/19.
+//  Copyright © 2019 Andrew Dixon. All rights reserved.
 //
 
 import Foundation

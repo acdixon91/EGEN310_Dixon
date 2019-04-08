@@ -14,6 +14,8 @@ import GameController
 class ViewController: NSViewController {
     
     @IBOutlet weak var transmit: NSButton!
+    @IBOutlet weak var bluetoothSwitch: NSButton!
+    @IBOutlet weak var controllerSwitch: NSButton!
     
     var buffer: [Data?] = []
     var inBuffer = false
@@ -71,6 +73,7 @@ class ViewController: NSViewController {
             if let isConnected: Bool = userInfo["isConnected"] {
                 if isConnected {
                     print("Connected to BT device")
+                    self.bluetoothSwitch.setNextState()
                     
                 } else {
                     print("Disconnected")
@@ -78,6 +81,12 @@ class ViewController: NSViewController {
             }
         });
     }
+    
+    
+   
+
+    
+    
 }
 
 
