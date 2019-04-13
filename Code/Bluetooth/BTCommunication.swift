@@ -31,13 +31,13 @@ class BTCommunication {
         var leftThumbStick = String(format: "%.0f", (position.leftThumbstick.xAxis.value + 1) * 90)
         var rightThumbStick = String(format: "%.0f", (position.rightThumbstick.xAxis.value + 1) * 90)
         
-        leftTrigger = String(intSize(leftTrigger))
-        rightTrigger = String(intSize(rightTrigger))
-        leftThumbStick = String(intSize(leftThumbStick))
-        rightThumbStick = String(intSize(rightThumbStick))
+        leftTrigger = (intSize(leftTrigger))
+        rightTrigger = (intSize(rightTrigger))
+        leftThumbStick = (intSize(leftThumbStick))
+        rightThumbStick = (intSize(rightThumbStick))
 
-        let firstPos = "!C:lt\(leftTrigger):rs\(rightThumbStick)$" as NSString
-        let secondPos = "!D:rt\(rightTrigger):ls\(leftThumbStick)$" as NSString
+        let firstPos = "!C:lt\(leftTrigger)rs\(rightThumbStick)$" as NSString
+        let secondPos = "!D:rt\(rightTrigger)ls\(leftThumbStick)$" as NSString
         
         print(secondPos)
 
@@ -60,6 +60,7 @@ class BTCommunication {
             print("Sending D - R Trigger: \(trigger) L Thumb: \(thumb)")
             sendPosition(position)
             previousDataD = position
+            print(position)
         }
     }
     
@@ -113,19 +114,24 @@ class BTCommunication {
     }
     
     func intSize(_ position: String) -> String{
+//        print("position\(position)")
         var stringPos = position
+//        print("stringPos\(stringPos)")
         let inPos = (position as NSString).integerValue
         if case 0 ... 9 = inPos{
             stringPos = "00\(stringPos)"
+//            print("reformated stringPos 0-9 \(stringPos)")
             return stringPos
         }
         
         else if case 10 ... 99 = inPos{
             stringPos = "0\(stringPos)"
+//            print("reformated stringPos 10-99 \(stringPos)")
             return stringPos
         }
         
         else{
+//        print("else \(stringPos)")
         return stringPos
         }
     }
