@@ -26,13 +26,20 @@ class BTCommunication {
     /// - Parameter position: A snapshot of all inputs on the controller, taken every 1ms
     func sendRemoteData(_ position : GCExtendedGamepadSnapshot){
         print("Sending Controller data ----->")
-        let leftTrigger = String(format: "%.0f", (position.leftTrigger.value + 1) * 100)
-        let rightTrigger = String(format: "%.0f", (position.rightTrigger.value + 1) * 100)
-        let leftThumbStick = String(format: "%.0f", (position.leftThumbstick.xAxis.value + 2) * 100)
-        let rightThumbStick = String(format: "%.0f", (position.rightThumbstick.xAxis.value + 2) * 100)
+        var leftTrigger = String(format: "%.0f", (position.leftTrigger.value + 0.6) * 150)
+        var rightTrigger = String(format: "%.0f", (position.rightTrigger.value + 0.6) * 150)
+        var leftThumbStick = String(format: "%.0f", (position.leftThumbstick.xAxis.value + 1) * 90)
+        var rightThumbStick = String(format: "%.0f", (position.rightThumbstick.xAxis.value + 1) * 90)
+        
+        leftTrigger = String(intSize(leftTrigger))
+        rightTrigger = String(intSize(rightTrigger))
+        leftThumbStick = String(intSize(leftThumbStick))
+        rightThumbStick = String(intSize(rightThumbStick))
 
         let firstPos = "!C:lt\(leftTrigger):rs\(rightThumbStick)$" as NSString
         let secondPos = "!D:rt\(rightTrigger):ls\(leftThumbStick)$" as NSString
+        
+        print(secondPos)
 
         
         let firstPosData = firstPos.data(using: String.Encoding.utf8.rawValue)
@@ -103,5 +110,23 @@ class BTCommunication {
         
         timerTXDelay?.invalidate()
         self.timerTXDelay = nil
+    }
+    
+    func intSize(_ position: String) -> String{
+        var stringPos = position
+        let inPos = (position as NSString).integerValue
+        if case 0 ... 9 = inPos{
+            stringPos = "00\(stringPos)"
+            return stringPos
+        }
+        
+        else if case 10 ... 99 = inPos{
+            stringPos = "0\(stringPos)"
+            return stringPos
+        }
+        
+        else{
+        return stringPos
+        }
     }
 }
