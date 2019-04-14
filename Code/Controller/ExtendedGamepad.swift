@@ -3,7 +3,6 @@
 //  ArduinoBluetooth
 //
 //  Created by Andrew Dixon on 3/8/19.
-//  Copyright © 2019 Andrew Dixon. All rights reserved.
 //
 
 import Foundation

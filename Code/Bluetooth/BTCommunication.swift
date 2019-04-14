@@ -3,7 +3,6 @@
 //  ArduinoBluetooth
 //
 //  Created by Andrew Dixon on 3/31/19.
-//  Copyright © 2019 Andrew Dixon. All rights reserved.
 //
 
 import Foundation
@@ -40,7 +39,6 @@ class BTCommunication {
         let secondPos = "!D:rt\(rightTrigger)ls\(leftThumbStick)$" as NSString
         
         print(secondPos)
-
         
         let firstPosData = firstPos.data(using: String.Encoding.utf8.rawValue)
         let secondPosData = secondPos.data(using: String.Encoding.utf8.rawValue)
@@ -78,8 +76,6 @@ class BTCommunication {
         if let bleService = btDiscoverySharedInstance.bleService {
             print("sending location")
             bleService.writeData(position)
-            
-
             previousData = position
             
             // Start delay timer
@@ -96,6 +92,7 @@ class BTCommunication {
         
         // Send buffer data
         if inBuffer == true {
+            print("**sending buffer packets**")
             sendPosition(buffer.removeFirst()!)
             buffer.removeAll()
             if(buffer.isEmpty){
@@ -113,6 +110,8 @@ class BTCommunication {
         self.timerTXDelay = nil
     }
     
+    
+    //Changes the format of the outgoing string so that its always sending 3 digets
     func intSize(_ position: String) -> String{
 //        print("position\(position)")
         var stringPos = position
@@ -123,13 +122,11 @@ class BTCommunication {
 //            print("reformated stringPos 0-9 \(stringPos)")
             return stringPos
         }
-        
         else if case 10 ... 99 = inPos{
             stringPos = "0\(stringPos)"
 //            print("reformated stringPos 10-99 \(stringPos)")
             return stringPos
         }
-        
         else{
 //        print("else \(stringPos)")
         return stringPos
