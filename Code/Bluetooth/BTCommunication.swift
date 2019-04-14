@@ -41,8 +41,6 @@ class BTCommunication {
         let firstPos = "!C:lt\(leftTrigger)rs\(rightThumbStick)$" as NSString
         let secondPos = "!D:rt\(rightTrigger)ls\(leftThumbStick)$" as NSString
         
-        print(secondPos)
-        
         let firstPosData = firstPos.data(using: String.Encoding.utf8.rawValue)
         let secondPosData = secondPos.data(using: String.Encoding.utf8.rawValue)
         newPosition(firstPosData!, "C", leftTrigger, rightThumbStick)
@@ -95,7 +93,6 @@ class BTCommunication {
         
         // Send buffer data
         if inBuffer == true {
-            print("**sending buffer packets**")
             sendPosition(buffer.removeFirst()!)
             buffer.removeAll()
             if(buffer.isEmpty){
@@ -108,7 +105,6 @@ class BTCommunication {
         if self.timerTXDelay == nil {
             return
         }
-        
         timerTXDelay?.invalidate()
         self.timerTXDelay = nil
     }
