@@ -1,10 +1,24 @@
+/*********************************************************************
+ This is an example for our nRF51822 based Bluefruit LE modules
 
+ Pick one up today in the adafruit shop!
+
+ Adafruit invests time and resources providing this open source code,
+ please support Adafruit and open-source hardware by purchasing
+ products from Adafruit!
+
+ MIT license, check LICENSE for more information
+ All text above, and the splash screen below must be included in
+ any redistribution
+*********************************************************************/
+
+#include <string.h>
 #include <Arduino.h>
 #include <SPI.h>
 #include "Adafruit_BLE.h"
 #include "Adafruit_BluefruitLE_SPI.h"
 #include "Adafruit_BluefruitLE_UART.h"
-#include <Servo.h>
+
 #include "BluefruitConfig.h"
 
 #if SOFTWARE_SERIAL_AVAILABLE
@@ -48,18 +62,18 @@
 /*=========================================================================*/
 
 // Create the bluefruit object, either software serial...uncomment these lines
-
+/*
 SoftwareSerial bluefruitSS = SoftwareSerial(BLUEFRUIT_SWUART_TXD_PIN, BLUEFRUIT_SWUART_RXD_PIN);
 
 Adafruit_BluefruitLE_UART ble(bluefruitSS, BLUEFRUIT_UART_MODE_PIN,
                       BLUEFRUIT_UART_CTS_PIN, BLUEFRUIT_UART_RTS_PIN);
-
+*/
 
 /* ...or hardware serial, which does not need the RTS/CTS pins. Uncomment this line */
-//Adafruit_BluefruitLE_UART ble(Serial1, BLUEFRUIT_UART_MODE_PIN);
+// Adafruit_BluefruitLE_UART ble(BLUEFRUIT_HWSERIAL_NAME, BLUEFRUIT_UART_MODE_PIN);
 
 /* ...hardware SPI, using SCK/MOSI/MISO hardware SPI pins and then user selected CS/IRQ/RST */
-//Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
+Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
 
 /* ...software SPI, using SCK/MOSI/MISO user-defined SPI pins and then user selected CS/IRQ/RST */
 //Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_SCK, BLUEFRUIT_SPI_MISO,
@@ -73,7 +87,6 @@ void error(const __FlashStringHelper*err) {
   while (1);
 }
 
-
 // function prototypes over in packetparser.cpp
 uint8_t readPacket(Adafruit_BLE *ble, uint16_t timeout);
 float parsefloat(uint8_t *buffer);
@@ -81,18 +94,6 @@ void printHex(const uint8_t * data, const uint32_t numBytes);
 
 // the packet buffer
 extern uint8_t packetbuffer[];
-
-extern String leftTrigger;
-extern String rightTrigger;
-extern int leftTriggerInt;
-extern int rightTriggerInt;
-extern String leftThumbstick;
-extern String rightThumbstick;
-extern String inString;
-String input;
-
-// Create survo object
-//Servo servo;
 
 // Motor A pins
 int enA = 5;
@@ -113,11 +114,8 @@ int in2B = 4;
 /**************************************************************************/
 void setup(void)
 {
-  //Set survo pin and set to center
-//  servo.attach(6);
-//  servo.write(90);
-  
-  // Set motor A control pins to outputs
+
+    // Set motor A control pins to outputs
   pinMode(enA, OUTPUT);
   pinMode(in1A, OUTPUT);
   pinMode(in2A, OUTPUT);
@@ -130,9 +128,9 @@ void setup(void)
   while (!Serial);  // required for Flora & Micro
   delay(500);
 
-  Serial.begin(9600);
-  Serial.println(F("Adafruit Bluefruit Command Mode Example"));
-  Serial.println(F("---------------------------------------"));
+  Serial.begin(115200);
+  Serial.println(F("Adafruit Bluefruit App Controller Example"));
+  Serial.println(F("-----------------------------------------"));
 
   /* Initialise the module */
   Serial.print(F("Initialising the Bluefruit LE module: "));
@@ -143,14 +141,15 @@ void setup(void)
   }
   Serial.println( F("OK!") );
 
-//  if ( FACTORYRESET_ENABLE )
-//  {
-//    /* Perform a factory reset to make sure everything is in a known state */
-//    Serial.println(F("Performing a factory reset: "));
-//    if ( ! ble.factoryReset() ){
-//      error(F("Couldn't factory reset"));
-//    }
-//  }
+  if ( FACTORYRESET_ENABLE )
+  {
+    /* Perform a factory reset to make sure everything is in a known state */
+    Serial.println(F("Performing a factory reset: "));
+    if ( ! ble.factoryReset() ){
+      error(F("Couldn't factory reset"));
+    }
+  }
+
 
   /* Disable command echo from Bluefruit */
   ble.echo(false);
@@ -159,8 +158,8 @@ void setup(void)
   /* Print Bluefruit information */
   ble.info();
 
-  Serial.println(F("Please use Adafruit Bluefruit LE app to connect in UART mode"));
-  Serial.println(F("Then Enter characters to send to Bluefruit"));
+  Serial.println(F("Please use Adafruit Bluefruit LE app to connect in Controller mode"));
+  Serial.println(F("Then activate/use the sensors, color picker, game controller, etc!"));
   Serial.println();
 
   ble.verbose(false);  // debug info is a little annoying after this point!
@@ -170,22 +169,22 @@ void setup(void)
       delay(500);
   }
 
+  Serial.println(F("******************************"));
+
   // LED Activity command is only supported from 0.6.6
   if ( ble.isVersionAtLeast(MINIMUM_FIRMWARE_VERSION) )
   {
     // Change Mode LED Activity
-    Serial.println(F("******************************"));
     Serial.println(F("Change LED activity to " MODE_LED_BEHAVIOUR));
     ble.sendCommandCheckOK("AT+HWModeLED=" MODE_LED_BEHAVIOUR);
-    Serial.println(F("******************************"));
   }
 
-    // Set module to DATA mode
+  // Set Bluefruit to DATA mode
   Serial.println( F("Switching to DATA mode!") );
   ble.setMode(BLUEFRUIT_MODE_DATA);
-  
-  //pinMode(LED, OUTPUT);     // Set pin as an output
-  //digitalWrite(LED, LOW);
+
+  Serial.println(F("******************************"));
+
 }
 
 /**************************************************************************/
@@ -195,84 +194,115 @@ void setup(void)
 /**************************************************************************/
 void loop(void)
 {
-
-//    servo.attach(6);
-
-//    digitalWrite(in1A, LOW);
-//    digitalWrite(in2A, HIGH);
-//    analogWrite(enA, 200);
-//    digitalWrite(in1B, LOW);
-//    digitalWrite(in2B, HIGH);
-//    analogWrite(enB, 200);
-//    
-   
   /* Wait for new data to arrive */
   uint8_t len = readPacket(&ble, BLE_READPACKET_TIMEOUT);
   if (len == 0) return;
 
-  Serial.println("incoming data");
-  
-//    App Data
-    if (packetbuffer[1] == 'B') {
-      
-      Serial.println("Data from Computer App");
-      Serial.println("Input String: " + inString);
-      Serial.println("----------------------------");
-  }
+  /* Got a packet! */
+  // printHex(packetbuffer, len);
 
-//    First part of Controller data -- takes in the left trigger(reverse) and right thumbstick(not being used)
+  // Color
   if (packetbuffer[1] == 'C') {
-    
-    Serial.println("Input String: " + inString);
-    Serial.println("Left Trigger: " + leftTrigger);
-    Serial.println("Right Thumbstick: " + rightThumbstick);
-    Serial.println(leftTrigger.toInt());
-    Serial.println("----------------------------");
-
-    // the application sends 090 when the trigger isn't pressed. If 090 is received, set the leftTrigger value to 000
-    if(leftTrigger == "090")
-    {
-      leftTrigger = "000";
-    }
-
-    //move motor A backwards
-    digitalWrite(in1A, LOW);
-    digitalWrite(in2A, HIGH);
-    analogWrite(enA, leftTriggerInt);    
-
-    //move motor B backwards
-    digitalWrite(in1B, HIGH);
-    digitalWrite(in2B, LOW);
-    analogWrite(enB, leftTriggerInt);    
+    uint8_t red = packetbuffer[2];
+    uint8_t green = packetbuffer[3];
+    uint8_t blue = packetbuffer[4];
+    Serial.print ("RGB #");
+    if (red < 0x10) Serial.print("0");
+    Serial.print(red, HEX);
+    if (green < 0x10) Serial.print("0");
+    Serial.print(green, HEX);
+    if (blue < 0x10) Serial.print("0");
+    Serial.println(blue, HEX);
   }
 
-//    Second part of Controller data -- takes in the right trigger(forward) and left thumbstick(servo control - only x-axis input taken in)
-  if (packetbuffer[1] == 'D') {
-    Serial.println("Input String: "+ inString);
-    Serial.println("Right Trigger: " + rightTrigger.toInt());
-    Serial.println("Left Thumbstick: " + leftThumbstick.toInt());
-    Serial.println("enB set to - " + leftTriggerInt); 
-    Serial.println("----------------------------");
+  // Buttons
+  if (packetbuffer[1] == 'B') {
+    uint8_t buttnum = packetbuffer[2] - '0';
+    boolean pressed = packetbuffer[3] - '0';
+    Serial.print ("Button "); Serial.print(buttnum);
+    if (pressed) {
+      Serial.println(" pressed");
+      digitalWrite(in1A, LOW);
+      digitalWrite(in2A, HIGH);
+      analogWrite(enA, 200);
 
-    if(rightTrigger == "090")//turn motor off if trigger is at zero
-    {
-      rightTrigger = "000";
+      digitalWrite(in1B, HIGH);
+      digitalWrite(in2B, LOW);
+      analogWrite(enB, 200); 
+      
+    } else {
+      Serial.println(" released");
+      digitalWrite(in1A, LOW);
+      digitalWrite(in2A, HIGH);
+      analogWrite(enA, 0);
+
+      digitalWrite(in1B, HIGH);
+      digitalWrite(in2B, LOW);
+      analogWrite(enB, 0);
     }
-    
-    //move motor A forward
-    digitalWrite(in1A, HIGH);
-    digitalWrite(in2A, LOW);
-//    analogWrite(enA, rightTriggerInt);    
-    analogWrite(enA, 200); 
+  }
 
-    //move motor B forward
-//    digitalWrite(in1B, LOW);
-//    digitalWrite(in2B, HIGH);
-//    analogWrite(enB, rightTriggerInt);
-//    analogWrite(enB, 200);
-    
+  // GPS Location
+  if (packetbuffer[1] == 'L') {
+    float lat, lon, alt;
+    lat = parsefloat(packetbuffer+2);
+    lon = parsefloat(packetbuffer+6);
+    alt = parsefloat(packetbuffer+10);
+    Serial.print("GPS Location\t");
+    Serial.print("Lat: "); Serial.print(lat, 4); // 4 digits of precision!
+    Serial.print('\t');
+    Serial.print("Lon: "); Serial.print(lon, 4); // 4 digits of precision!
+    Serial.print('\t');
+    Serial.print(alt, 4); Serial.println(" meters");
+  }
 
-//    servo
-//    servo.write(leftThumbstick.toInt());
+  // Accelerometer
+  if (packetbuffer[1] == 'A') {
+    float x, y, z;
+    x = parsefloat(packetbuffer+2);
+    y = parsefloat(packetbuffer+6);
+    z = parsefloat(packetbuffer+10);
+    Serial.print("Accel\t");
+    Serial.print(x); Serial.print('\t');
+    Serial.print(y); Serial.print('\t');
+    Serial.print(z); Serial.println();
+  }
+
+  // Magnetometer
+  if (packetbuffer[1] == 'M') {
+    float x, y, z;
+    x = parsefloat(packetbuffer+2);
+    y = parsefloat(packetbuffer+6);
+    z = parsefloat(packetbuffer+10);
+    Serial.print("Mag\t");
+    Serial.print(x); Serial.print('\t');
+    Serial.print(y); Serial.print('\t');
+    Serial.print(z); Serial.println();
+  }
+
+  // Gyroscope
+  if (packetbuffer[1] == 'G') {
+    float x, y, z;
+    x = parsefloat(packetbuffer+2);
+    y = parsefloat(packetbuffer+6);
+    z = parsefloat(packetbuffer+10);
+    Serial.print("Gyro\t");
+    Serial.print(x); Serial.print('\t');
+    Serial.print(y); Serial.print('\t');
+    Serial.print(z); Serial.println();
+  }
+
+  // Quaternions
+  if (packetbuffer[1] == 'Q') {
+    float x, y, z, w;
+    x = parsefloat(packetbuffer+2);
+    y = parsefloat(packetbuffer+6);
+    z = parsefloat(packetbuffer+10);
+    w = parsefloat(packetbuffer+14);
+    Serial.print("Quat\t");
+    Serial.print(x); Serial.print('\t');
+    Serial.print(y); Serial.print('\t');
+    Serial.print(z); Serial.print('\t');
+    Serial.print(w); Serial.println();
   }
 }

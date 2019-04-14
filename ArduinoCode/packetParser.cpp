@@ -30,6 +30,8 @@ String leftTrigger;
 String rightTrigger;
 String leftThumbstick;
 String rightThumbstick;
+int leftTriggerInt;
+int rightTriggerInt;
 
 /*   Waits for incoming data and parses it */
 uint8_t readPacket(Adafruit_BLE *ble, uint16_t timeout) 
@@ -49,14 +51,16 @@ uint8_t readPacket(Adafruit_BLE *ble, uint16_t timeout)
 
     if ((packetbuffer[1] == 'C') && (packetbuffer[replyidx - 1] == '$')){
       leftTrigger = (char)packetbuffer[5]; leftTrigger.concat((char)packetbuffer[6]); leftTrigger.concat((char)packetbuffer[7]);
-      rightThumbstick = (char)packetbuffer[10]; rightThumbstick.concat((char)packetbuffer[11]); rightThumbstick.concat((char)packetbuffer[12]);
+      rightThumbstick = (char)packetbuffer[11]; rightThumbstick.concat((char)packetbuffer[12]); rightThumbstick.concat((char)packetbuffer[13]);
+      leftTriggerInt = leftTrigger.toInt();
       break;
     }
       
 
     if ((packetbuffer[1] == 'D') && (packetbuffer[replyidx - 1] == '$')){
       rightTrigger = (char)packetbuffer[5]; rightTrigger.concat((char)packetbuffer[6]); rightTrigger.concat((char)packetbuffer[7]);
-      leftThumbstick = (char)packetbuffer[10]; leftThumbstick.concat((char)packetbuffer[11]); leftThumbstick.concat((char)packetbuffer[12]);
+      leftThumbstick = (char)packetbuffer[11]; leftThumbstick.concat((char)packetbuffer[12]); leftThumbstick.concat((char)packetbuffer[13]);
+      rightTriggerInt = rightTrigger.toInt();
       break;
     }
       
