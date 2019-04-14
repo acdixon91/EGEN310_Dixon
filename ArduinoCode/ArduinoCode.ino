@@ -100,9 +100,9 @@ int in1A = 13;
 int in2A = 7;
 
 //Motor B pins
-int enB = 5;
-int in1B = 13;
-int in2B = 7;
+int enB = 3;
+int in1B = 2;
+int in2B = 4;
 
 
 /**************************************************************************/
@@ -237,7 +237,6 @@ void loop(void)
 
 //    Second part of Controller data -- takes in the right trigger(forward) and left thumbstick(servo control - only x-axis input taken in)
   if (packetbuffer[1] == 'D') {
-    
     Serial.println("Input String: "+ inString);
     Serial.println("Right Trigger: " + rightTrigger);
     Serial.println("Left Thumbstick: " + leftThumbstick);
@@ -260,6 +259,6 @@ void loop(void)
     analogWrite(enB, leftTrigger.toInt()); 
 
     //servo
-    servo.write(leftThumbstick.toInt());
+//    servo.write(leftThumbstick.toInt());
   }
 }

@@ -34,6 +34,9 @@ class BTCommunication {
         rightTrigger = (intSize(rightTrigger))
         leftThumbStick = (intSize(leftThumbStick))
         rightThumbStick = (intSize(rightThumbStick))
+        
+        leftThumbStick = formatTriggerInput(leftThumbStick)
+        rightThumbStick = formatTriggerInput(rightThumbStick)
 
         let firstPos = "!C:lt\(leftTrigger)rs\(rightThumbStick)$" as NSString
         let secondPos = "!D:rt\(rightTrigger)ls\(leftThumbStick)$" as NSString
@@ -113,23 +116,35 @@ class BTCommunication {
     
     //Changes the format of the outgoing string so that its always sending 3 digets
     func intSize(_ position: String) -> String{
-//        print("position\(position)")
         var stringPos = position
-//        print("stringPos\(stringPos)")
         let inPos = (position as NSString).integerValue
         if case 0 ... 9 = inPos{
             stringPos = "00\(stringPos)"
-//            print("reformated stringPos 0-9 \(stringPos)")
             return stringPos
         }
         else if case 10 ... 99 = inPos{
             stringPos = "0\(stringPos)"
-//            print("reformated stringPos 10-99 \(stringPos)")
             return stringPos
         }
         else{
-//        print("else \(stringPos)")
         return stringPos
+        }
+    }
+    
+    //limits the thumbstick output to 60 - 120 degrees
+    func formatTriggerInput(_ position: String) -> String {
+        var stringPos = position
+        let inPos = (position as NSString).integerValue
+        if case 0 ... 60 = inPos{
+            stringPos = "060"
+            return stringPos
+        }
+        else if case 120 ... 180 = inPos{
+            stringPos = "120"
+            return stringPos
+        }
+        else{
+            return stringPos
         }
     }
 }
