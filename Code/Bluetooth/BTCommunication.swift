@@ -100,7 +100,6 @@ class BTCommunication {
         if self.timerTXDelay == nil {
             return
         }
-        
         timerTXDelay?.invalidate()
         self.timerTXDelay = nil
     }
