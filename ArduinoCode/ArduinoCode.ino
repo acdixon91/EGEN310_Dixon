@@ -91,14 +91,18 @@ extern String rightThumbstick;
 extern String inString;
 String input;
 
-//instantiating a servo
-Servo turn;
+// Create survo object
+Servo servo;
 
-// Motor pins
+// Motor A pins
 int enA = 5;
-int in1 = 13;
-int in2 = 7;
+int in1A = 13;
+int in2A = 7;
 
+//Motor B pins
+int enB = 5;
+int in1B = 13;
+int in2B = 7;
 
 
 /**************************************************************************/
@@ -109,10 +113,19 @@ int in2 = 7;
 /**************************************************************************/
 void setup(void)
 {
-  // Set all the motor control pins to outputs
+  //Set survo pin and set to center
+  servo.attach(6);
+  servo.write(90);
+  
+  // Set motor A control pins to outputs
   pinMode(enA, OUTPUT);
-  pinMode(in1, OUTPUT);
-  pinMode(in2, OUTPUT);
+  pinMode(in1A, OUTPUT);
+  pinMode(in2A, OUTPUT);
+
+  // Set motor B control pins to outputs
+  pinMode(enB, OUTPUT);
+  pinMode(in1B, OUTPUT);
+  pinMode(in2B, OUTPUT);
   
   while (!Serial);  // required for Flora & Micro
   delay(500);
@@ -182,7 +195,6 @@ void setup(void)
 /**************************************************************************/
 void loop(void)
 {
- 
   /* Wait for new data to arrive */
   uint8_t len = readPacket(&ble, BLE_READPACKET_TIMEOUT);
   if (len == 0) return;
@@ -197,26 +209,33 @@ void loop(void)
       Serial.println("----------------------------");
   }
 
-//    First part of Controller data
+//    First part of Controller data -- takes in the left trigger(reverse) and right thumbstick(not being used)
   if (packetbuffer[1] == 'C') {
     
     Serial.println("Input String: " + inString);
     Serial.println("Left Trigger: " + leftTrigger);
     Serial.println("Right Thumbstick: " + rightThumbstick);
     Serial.println(leftTrigger.toInt());
-    
     Serial.println("----------------------------");
 
-    if(leftTrigger == "090")//turn motor off if trigger is at zero
+    // the application sends 090 when the trigger isn't pressed. If 090 is received, set the leftTrigger value to 000
+    if(leftTrigger == "090")
     {
       leftTrigger = "000";
     }
-    digitalWrite(in1, LOW);//move motor backward
-    digitalWrite(in2, HIGH);
+
+    //move motor A backwards
+    digitalWrite(in1A, LOW);
+    digitalWrite(in2A, HIGH);
     analogWrite(enA, leftTrigger.toInt());    
+
+    //move motor B backwards
+    digitalWrite(in1B, HIGH);
+    digitalWrite(in2B, LOW);
+    analogWrite(enB, leftTrigger.toInt());    
   }
 
-//    Second part of Controller data
+//    Second part of Controller data -- takes in the right trigger(forward) and left thumbstick(servo control - only x-axis input taken in)
   if (packetbuffer[1] == 'D') {
     
     Serial.println("Input String: "+ inString);
@@ -229,9 +248,18 @@ void loop(void)
     {
       rightTrigger = "000";
     }
-    digitalWrite(in1, HIGH);//move motor forward
-    digitalWrite(in2, LOW);
-    analogWrite(enA, rightTrigger.toInt());
+    
+    //move motor A forward
+    digitalWrite(in1A, HIGH);
+    digitalWrite(in2A, LOW);
+    analogWrite(enA, leftTrigger.toInt());    
+
+    //move motor B forward
+    digitalWrite(in1B, LOW);
+    digitalWrite(in2B, HIGH);
+    analogWrite(enB, leftTrigger.toInt()); 
+
+    //servo
+    servo.write(leftThumbstick.toInt());
   }
 }
-  
