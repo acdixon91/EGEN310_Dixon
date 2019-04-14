@@ -4,7 +4,7 @@
 #include "Adafruit_BLE.h"
 #include "Adafruit_BluefruitLE_SPI.h"
 #include "Adafruit_BluefruitLE_UART.h"
-
+#include <Servo.h>
 #include "BluefruitConfig.h"
 
 #if SOFTWARE_SERIAL_AVAILABLE
@@ -48,18 +48,18 @@
 /*=========================================================================*/
 
 // Create the bluefruit object, either software serial...uncomment these lines
-/*
+
 SoftwareSerial bluefruitSS = SoftwareSerial(BLUEFRUIT_SWUART_TXD_PIN, BLUEFRUIT_SWUART_RXD_PIN);
 
 Adafruit_BluefruitLE_UART ble(bluefruitSS, BLUEFRUIT_UART_MODE_PIN,
                       BLUEFRUIT_UART_CTS_PIN, BLUEFRUIT_UART_RTS_PIN);
-*/
+
 
 /* ...or hardware serial, which does not need the RTS/CTS pins. Uncomment this line */
 //Adafruit_BluefruitLE_UART ble(Serial1, BLUEFRUIT_UART_MODE_PIN);
 
 /* ...hardware SPI, using SCK/MOSI/MISO hardware SPI pins and then user selected CS/IRQ/RST */
-Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
+//Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
 
 /* ...software SPI, using SCK/MOSI/MISO user-defined SPI pins and then user selected CS/IRQ/RST */
 //Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_SCK, BLUEFRUIT_SPI_MISO,
@@ -83,13 +83,23 @@ void printHex(const uint8_t * data, const uint32_t numBytes);
 extern uint8_t packetbuffer[];
 
 
-int LED = 13;
+//int LED = 13;
 extern String leftTrigger;
 extern String rightTrigger;
 extern String leftThumbstick;
 extern String rightThumbstick;
 extern String inString;
 String input;
+
+//instantiating a servo
+Servo turn;
+
+// Motor pins
+int enA = 5;
+int in1 = 13;
+int in2 = 7;
+
+
 
 /**************************************************************************/
 /*!
@@ -99,6 +109,11 @@ String input;
 /**************************************************************************/
 void setup(void)
 {
+  // Set all the motor control pins to outputs
+  pinMode(enA, OUTPUT);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  
   while (!Serial);  // required for Flora & Micro
   delay(500);
 
@@ -156,8 +171,8 @@ void setup(void)
   Serial.println( F("Switching to DATA mode!") );
   ble.setMode(BLUEFRUIT_MODE_DATA);
   
-  pinMode(LED, OUTPUT);     // Set pin as an output
-  digitalWrite(LED, LOW);
+  //pinMode(LED, OUTPUT);     // Set pin as an output
+  //digitalWrite(LED, LOW);
 }
 
 /**************************************************************************/
@@ -188,7 +203,17 @@ void loop(void)
     Serial.println("Input String: " + inString);
     Serial.println("Left Trigger: " + leftTrigger);
     Serial.println("Right Thumbstick: " + rightThumbstick);
+    Serial.println(leftTrigger.toInt());
+    
     Serial.println("----------------------------");
+
+    if(leftTrigger == "090")//turn motor off if trigger is at zero
+    {
+      leftTrigger = "000";
+    }
+    digitalWrite(in1, LOW);//move motor backward
+    digitalWrite(in2, HIGH);
+    analogWrite(enA, leftTrigger.toInt());    
   }
 
 //    Second part of Controller data
@@ -197,7 +222,16 @@ void loop(void)
     Serial.println("Input String: "+ inString);
     Serial.println("Right Trigger: " + rightTrigger);
     Serial.println("Left Thumbstick: " + leftThumbstick);
+    Serial.println(rightTrigger.toInt());
     Serial.println("----------------------------");
+
+    if(rightTrigger == "090")//turn motor off if trigger is at zero
+    {
+      rightTrigger = "000";
+    }
+    digitalWrite(in1, HIGH);//move motor forward
+    digitalWrite(in2, LOW);
+    analogWrite(enA, rightTrigger.toInt());
   }
 }
   
