@@ -93,8 +93,7 @@ class BTService: NSObject, CBPeripheralDelegate {
       }
     }
   }
-  
-  // Mark: - Private
+
     
     func writeData(_ position: Data) {
     // See if characteristic has been discovered before writing to it

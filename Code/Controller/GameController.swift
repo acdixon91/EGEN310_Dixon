@@ -31,12 +31,14 @@ class GameController : NSObject{
         GCController.startWirelessControllerDiscovery(completionHandler: {})
     }
     
+    
     func stopWatchingForControllers() {
         let ctr = NotificationCenter.default
         ctr.removeObserver(self, name: .GCControllerDidConnect, object: nil)
         ctr.removeObserver(self, name: .GCControllerDidDisconnect, object: nil)
         GCController.stopWirelessControllerDiscovery()
     }
+    
     
     func add(_ controller: GCController) {
         let name = String(describing:controller.vendorName)
@@ -51,6 +53,7 @@ class GameController : NSObject{
             print("Huh? \(name)")
         }
     }
+    
     
     func remove(_ controller: GCController) {
         

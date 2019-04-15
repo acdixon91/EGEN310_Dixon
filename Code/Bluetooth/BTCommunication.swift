@@ -43,18 +43,21 @@ class BTCommunication {
         
         let firstPosData = firstPos.data(using: String.Encoding.utf8.rawValue)
         let secondPosData = secondPos.data(using: String.Encoding.utf8.rawValue)
+        
         newPosition(firstPosData!, "C", leftTrigger, rightThumbStick)
         newPosition(secondPosData!, "D", rightTrigger, leftThumbStick)
 
     }
     
-    // Check to see if the possition has has already been sent
+    // Check to see if the position has has already been sent
     func newPosition(_ position: Data, _ name: NSString, _ trigger: String, _ thumb: String){
+        
         if name == "C" && position != previousDataC {
             print("Sending C - L Trigger: \(trigger) R Thumb: \(thumb)")
             sendPosition(position)
             previousDataC = position
         }
+            
         else if name == "D" && position != previousDataD {
             print("Sending D - R Trigger: \(trigger) L Thumb: \(thumb)")
             sendPosition(position)
@@ -63,8 +66,9 @@ class BTCommunication {
         }
     }
     
-
+    //takes in postion data. Checks to see if 1ms timer has ended; if so - it sends data, if not - it adds to the buffer to be sent afterwards
     func sendPosition(_ position: Data) {
+        
         if !allowTX {
             if(position != previousData){
                 buffer.append(position)
@@ -73,8 +77,7 @@ class BTCommunication {
             return
         }
         
-        // Send position to BLE Shield (if service exists and is connected)
-        if let bleService = btDiscoverySharedInstance.bleService {
+        if let bleService = btDiscoverySharedInstance.bleService {          // Send position to BLE Shield (if service exists and is connected)
             print("sending location")
             bleService.writeData(position)
             previousData = position
@@ -87,6 +90,7 @@ class BTCommunication {
         }
     }
     
+    //timer object
     @objc func timerTXDelayElapsed() {
         self.allowTX = true
         self.stopTimerTXDelay()
@@ -101,7 +105,9 @@ class BTCommunication {
         }
     }
     
+    //turns off timer
     func stopTimerTXDelay() {
+        
         if self.timerTXDelay == nil {
             return
         }
@@ -114,6 +120,7 @@ class BTCommunication {
     func intSize(_ position: String) -> String{
         var stringPos = position
         let inPos = (position as NSString).integerValue
+        
         if case 0 ... 9 = inPos{
             stringPos = "00\(stringPos)"
             return stringPos
@@ -127,10 +134,12 @@ class BTCommunication {
         }
     }
     
+    
     //limits the thumbstick output to 60 - 120 degrees
     func formatTriggerInput(_ position: String) -> String {
         var stringPos = position
         let inPos = (position as NSString).integerValue
+        
         if case 0 ... 60 = inPos{
             stringPos = "060"
             return stringPos

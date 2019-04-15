@@ -55,9 +55,8 @@ public class ExtendedGamePad{
         }
     }
     
-    
+    //timer to take snapshot every 2ms
     func timerCheck() {
-
         if self.allowTX == true {
             self.allowTX = false
             if timerTXDelay == nil {

@@ -265,11 +265,11 @@ void loop(void)
 //    analogWrite(enA, rightTriggerInt);    
     analogWrite(enA, 200); 
 
-    //move motor B forward
-//    digitalWrite(in1B, LOW);
-//    digitalWrite(in2B, HIGH);
+//    move motor B forward
+    digitalWrite(in1B, LOW);
+    digitalWrite(in2B, HIGH);
 //    analogWrite(enB, rightTriggerInt);
-//    analogWrite(enB, 200);
+    analogWrite(enB, 200);
     
 
 //    servo
