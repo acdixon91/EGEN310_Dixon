@@ -90,9 +90,10 @@ extern String leftThumbstick;
 extern String rightThumbstick;
 extern String inString;
 String input;
+int pastDegree;
 
 // Create survo object
-//Servo servo;
+Servo servo;
 
 // Motor A pins
 int enA = 5;
@@ -114,8 +115,9 @@ int in2B = 4;
 void setup(void)
 {
   //Set survo pin and set to center
-//  servo.attach(6);
-//  servo.write(90);
+  servo.attach(6);
+  servo.write(90);
+  pastDegree = 90;
   
   // Set motor A control pins to outputs
   pinMode(enA, OUTPUT);
@@ -130,7 +132,7 @@ void setup(void)
   while (!Serial);  // required for Flora & Micro
   delay(500);
 
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println(F("Adafruit Bluefruit Command Mode Example"));
   Serial.println(F("---------------------------------------"));
 
@@ -196,15 +198,7 @@ void setup(void)
 void loop(void)
 {
 
-//    servo.attach(6);
-
-//    digitalWrite(in1A, LOW);
-//    digitalWrite(in2A, HIGH);
-//    analogWrite(enA, 200);
-//    digitalWrite(in1B, LOW);
-//    digitalWrite(in2B, HIGH);
-//    analogWrite(enB, 200);
-//    
+//  servo.attach(6);
    
   /* Wait for new data to arrive */
   uint8_t len = readPacket(&ble, BLE_READPACKET_TIMEOUT);
@@ -212,7 +206,7 @@ void loop(void)
 
   Serial.println("incoming data");
   
-//    App Data
+    // App Data
     if (packetbuffer[1] == 'B') {
       
       Serial.println("Data from Computer App");
@@ -220,7 +214,7 @@ void loop(void)
       Serial.println("----------------------------");
   }
 
-//    First part of Controller data -- takes in the left trigger(reverse) and right thumbstick(not being used)
+   // First part of Controller data -- takes in the left trigger(reverse) and right thumbstick(not being used)
   if (packetbuffer[1] == 'C') {
     
     Serial.println("Input String: " + inString);
@@ -229,50 +223,51 @@ void loop(void)
     Serial.println(leftTrigger.toInt());
     Serial.println("----------------------------");
 
-    // the application sends 090 when the trigger isn't pressed. If 090 is received, set the leftTrigger value to 000
-    if(leftTrigger == "090")
+    
+    if(leftTriggerInt == 90)  // the application sends 090 when the trigger isn't pressed. If 090 is received, set the leftTrigger value to 000
     {
-      leftTrigger = "000";
+      leftTriggerInt = 0;
     }
 
-    //move motor A backwards
-    digitalWrite(in1A, LOW);
-    digitalWrite(in2A, HIGH);
+    //motor A 
+    digitalWrite(in1A, HIGH);
+    digitalWrite(in2A, LOW);
     analogWrite(enA, leftTriggerInt);    
 
-    //move motor B backwards
+    //motor B 
     digitalWrite(in1B, HIGH);
     digitalWrite(in2B, LOW);
     analogWrite(enB, leftTriggerInt);    
   }
 
-//    Second part of Controller data -- takes in the right trigger(forward) and left thumbstick(servo control - only x-axis input taken in)
+  //Second part of Controller data -- takes in the right trigger(forward) and left thumbstick(servo control - only x-axis input taken in)
   if (packetbuffer[1] == 'D') {
     Serial.println("Input String: "+ inString);
-    Serial.println("Right Trigger: " + rightTrigger.toInt());
-    Serial.println("Left Thumbstick: " + leftThumbstick.toInt());
-    Serial.println("enB set to - " + leftTriggerInt); 
+    Serial.println("Right Trigger: " + rightTrigger);
+    Serial.println("Left Thumbstick: " + leftThumbstick); 
+    Serial.println(rightTriggerInt);
     Serial.println("----------------------------");
 
-    if(rightTrigger == "090")//turn motor off if trigger is at zero
+    if(rightTriggerInt == 90) // the application sends 090 when the trigger isn't pressed. If 090 is received, set the leftTrigger value to 000
     {
-      rightTrigger = "000";
+      rightTriggerInt = 0;
     }
     
-    //move motor A forward
-    digitalWrite(in1A, HIGH);
-    digitalWrite(in2A, LOW);
-//    analogWrite(enA, rightTriggerInt);    
-    analogWrite(enA, 200); 
+    //motor A 
+    digitalWrite(in1A, LOW);
+    digitalWrite(in2A, HIGH);
+    analogWrite(enA, rightTriggerInt);    
 
-//    move motor B forward
+    //motor B
     digitalWrite(in1B, LOW);
     digitalWrite(in2B, HIGH);
-//    analogWrite(enB, rightTriggerInt);
-    analogWrite(enB, 200);
+    analogWrite(enB, rightTriggerInt);
     
-
 //    servo
-//    servo.write(leftThumbstick.toInt());
+
+    if(leftThumbstick.toInt() != pastDegree){
+      servo.write(leftThumbstick.toInt());
+      pastDegree = leftThumbstick.toInt();
+    }
   }
 }

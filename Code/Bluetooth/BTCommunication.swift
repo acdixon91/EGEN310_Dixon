@@ -35,8 +35,12 @@ class BTCommunication {
         leftThumbStick = (intSize(leftThumbStick))
         rightThumbStick = (intSize(rightThumbStick))
         
-        leftThumbStick = formatTriggerInput(leftThumbStick)
-        rightThumbStick = formatTriggerInput(rightThumbStick)
+        leftThumbStick = thumbLimiter(leftThumbStick)
+        rightThumbStick = thumbLimiter(rightThumbStick)
+//        leftThumbStick = formatThumbInput(leftThumbStick)
+//        rightThumbStick = formatThumbInput(rightThumbStick)
+        
+        leftThumbStick = (intSize(leftThumbStick))
 
         let firstPos = "!C:lt\(leftTrigger)rs\(rightThumbStick)$" as NSString
         let secondPos = "!D:rt\(rightTrigger)ls\(leftThumbStick)$" as NSString
@@ -136,20 +140,65 @@ class BTCommunication {
     
     
     //limits the thumbstick output to 60 - 120 degrees
-    func formatTriggerInput(_ position: String) -> String {
+    func formatThumbInput(_ position: String) -> String {
         var stringPos = position
         let inPos = (position as NSString).integerValue
         
-        if case 0 ... 60 = inPos{
-            stringPos = "060"
+        if case 0 ... 70 = inPos{
+            stringPos = "070"
             return stringPos
         }
-        else if case 120 ... 180 = inPos{
-            stringPos = "120"
+        else if case 110 ... 180 = inPos{
+            stringPos = "110"
             return stringPos
         }
         else{
             return stringPos
         }
+    }
+    
+    
+    func thumbLimiter(_ position: String) -> String {
+        var inPos = (position as NSString).integerValue
+        
+        switch inPos {
+        case 0 ... 20:
+            inPos = 70
+            
+        case 21 ... 40:
+            inPos = 73
+            
+        case 41 ... 60:
+            inPos = 78
+        
+        case 61 ... 80:
+            inPos = 82
+            
+        case 81 ... 89:
+            inPos = 87
+        
+        case 90:
+            inPos = 90
+            
+        case 91 ... 100:
+            inPos = 93
+            
+        case 101 ... 120:
+            inPos = 98
+            
+        case 121 ... 140:
+            inPos = 102
+            
+        case 141 ... 160:
+            inPos = 107
+            
+        case 161 ... 180:
+            inPos = 110
+        
+        default:
+            inPos = 90
+        }
+        
+        return String(inPos)
     }
 }
