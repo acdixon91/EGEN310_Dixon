@@ -74,6 +74,7 @@ class BTCommunication {
         }
     }
     
+    // OVERLOADED FUNCTION - Check to see if the position has has already been sent for 3 inputs
     func newPosition(_ position: Data, _ name: NSString, _ triggerA: String, _ thumb: String, _ triggerB: String){
         
         if name == "E" && position != previousDataC {
@@ -81,8 +82,8 @@ class BTCommunication {
 //            sendPosition(position)
             previousDataC = position
         }
-        
     }
+    
     
     //takes in postion data. Checks to see if 1ms timer has ended; if so - it sends data, if not - it adds to the buffer to be sent afterwards
     func sendPosition(_ position: Data) {
@@ -108,6 +109,7 @@ class BTCommunication {
         }
     }
     
+    
     //timer object
     @objc func timerTXDelayElapsed() {
         self.allowTX = true
@@ -122,6 +124,7 @@ class BTCommunication {
             }
         }
     }
+    
     
     //turns off timer
     func stopTimerTXDelay() {
@@ -172,6 +175,7 @@ class BTCommunication {
     }
     
     
+    //propotionatly brings the range from 0-180 to 70-120
     func thumbLimiter(_ position: String) -> String {
         var inPos = (position as NSString).integerValue
         
