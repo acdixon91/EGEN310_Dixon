@@ -18,6 +18,7 @@ class BTCommunication {
     var previousData: Data?
     var previousDataC: Data?
     var previousDataD: Data?
+    var previousDataE: Data?
     
     
     /// Takes in controller inputs and prepares them to be sent on to the BT device
@@ -25,8 +26,8 @@ class BTCommunication {
     /// - Parameter position: A snapshot of all inputs on the controller, taken every 1ms
     func sendRemoteData(_ position : GCExtendedGamepadSnapshot){
         print("Sending Controller data ----->")
-        var leftTrigger = String(format: "%.0f", (position.leftTrigger.value + 0.6) * 150)
-        var rightTrigger = String(format: "%.0f", (position.rightTrigger.value + 0.6) * 150)
+        var leftTrigger = String(format: "%.0f", (position.leftTrigger.value + 0.5) * 150)
+        var rightTrigger = String(format: "%.0f", (position.rightTrigger.value + 0.5) * 150)
         var leftThumbStick = String(format: "%.0f", (position.leftThumbstick.xAxis.value + 1) * 90)
         var rightThumbStick = String(format: "%.0f", (position.rightThumbstick.xAxis.value + 1) * 90)
         
@@ -44,12 +45,15 @@ class BTCommunication {
 
         let firstPos = "!C:lt\(leftTrigger)rs\(rightThumbStick)$" as NSString
         let secondPos = "!D:rt\(rightTrigger)ls\(leftThumbStick)$" as NSString
+        let thirdPos = "!Et\(rightTrigger)s\(leftThumbStick)t\(leftTrigger)$" as NSString
         
         let firstPosData = firstPos.data(using: String.Encoding.utf8.rawValue)
         let secondPosData = secondPos.data(using: String.Encoding.utf8.rawValue)
+        let thirdPosData = thirdPos.data(using: String.Encoding.utf8.rawValue)
         
         newPosition(firstPosData!, "C", leftTrigger, rightThumbStick)
         newPosition(secondPosData!, "D", rightTrigger, leftThumbStick)
+        newPosition(thirdPosData!, "E", rightTrigger, leftThumbStick, leftTrigger)
 
     }
     
@@ -68,6 +72,16 @@ class BTCommunication {
             previousDataD = position
             print(position)
         }
+    }
+    
+    func newPosition(_ position: Data, _ name: NSString, _ triggerA: String, _ thumb: String, _ triggerB: String){
+        
+        if name == "E" && position != previousDataC {
+            print("Sending E - L Trigger: \(triggerA) R Thumb: \(thumb) R Trigger: \(triggerB)")
+//            sendPosition(position)
+            previousDataC = position
+        }
+        
     }
     
     //takes in postion data. Checks to see if 1ms timer has ended; if so - it sends data, if not - it adds to the buffer to be sent afterwards

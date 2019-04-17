@@ -224,7 +224,7 @@ void loop(void)
     Serial.println("----------------------------");
 
     
-    if(leftTriggerInt == 90)  // the application sends 090 when the trigger isn't pressed. If 090 is received, set the leftTrigger value to 000
+    if(leftTriggerInt == 75)  // the application sends 090 when the trigger isn't pressed. If 090 is received, set the leftTrigger value to 000
     {
       leftTriggerInt = 0;
     }
@@ -248,7 +248,7 @@ void loop(void)
     Serial.println(rightTriggerInt);
     Serial.println("----------------------------");
 
-    if(rightTriggerInt == 90) // the application sends 090 when the trigger isn't pressed. If 090 is received, set the leftTrigger value to 000
+    if(rightTriggerInt == 75) // the application sends 090 when the trigger isn't pressed. If 090 is received, set the leftTrigger value to 000
     {
       rightTriggerInt = 0;
     }
@@ -265,6 +265,58 @@ void loop(void)
     
 //    servo
 
+    if(leftThumbstick.toInt() != pastDegree){
+      servo.write(leftThumbstick.toInt());
+      pastDegree = leftThumbstick.toInt();
+    }
+  }
+
+  
+    //Packets starting with E (sending 3 inputs instead of 2)
+    if (packetbuffer[1] == 'E') {
+    Serial.println("Input String: "+ inString);
+    Serial.println("Right Trigger: " + rightTrigger);
+    Serial.println("Left Thumbstick: " + leftTrigger); 
+    Serial.println("Left Thumbstick: " + leftThumbstick); 
+    Serial.println(rightTriggerInt);
+    Serial.println("----------------------------");
+
+    if(rightTriggerInt == 75) // the application sends 090 when the trigger isn't pressed. If 090 is received, set the leftTrigger value to 000
+    {
+      rightTriggerInt = 0;
+    }
+
+    if(leftTriggerInt == 75) // the application sends 090 when the trigger isn't pressed. If 090 is received, set the leftTrigger value to 000
+    {
+      leftTriggerInt = 0;
+    }
+
+    if(rightTriggerInt != 0) {
+      
+    //motor A 
+    digitalWrite(in1A, LOW);
+    digitalWrite(in2A, HIGH);
+    analogWrite(enA, rightTriggerInt);    
+
+    //motor B
+    digitalWrite(in1B, LOW);
+    digitalWrite(in2B, HIGH);
+    analogWrite(enB, rightTriggerInt);
+    }
+
+    else if(leftTriggerInt != 0) {
+    //motor A 
+    digitalWrite(in1A, HIGH);
+    digitalWrite(in2A, LOW);
+    analogWrite(enA, leftTriggerInt);    
+
+    //motor B
+    digitalWrite(in1B, HIGH);
+    digitalWrite(in2B, LOW);
+    analogWrite(enB, leftTriggerInt);  
+    }
+    
+    // servo
     if(leftThumbstick.toInt() != pastDegree){
       servo.write(leftThumbstick.toInt());
       pastDegree = leftThumbstick.toInt();

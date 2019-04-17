@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Code/Bluetooth/BTCommunication.swift"
-            timestampString = "577149836.208143"
+            timestampString = "577153123.295527"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
             landmarkName = "sendRemoteData(_:)"
             landmarkType = "7">
          </BreakpointContent>

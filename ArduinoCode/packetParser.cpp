@@ -63,6 +63,16 @@ uint8_t readPacket(Adafruit_BLE *ble, uint16_t timeout)
       rightTriggerInt = rightTrigger.toInt();
       break;
     }
+
+    if ((packetbuffer[1] == 'E') && (packetbuffer[replyidx - 1] == '$')){
+      rightTrigger = (char)packetbuffer[3]; rightTrigger.concat((char)packetbuffer[4]); rightTrigger.concat((char)packetbuffer[5]);
+      leftThumbstick = (char)packetbuffer[7]; leftThumbstick.concat((char)packetbuffer[8]); leftThumbstick.concat((char)packetbuffer[9]);
+      leftTrigger = (char)packetbuffer[11]; leftTrigger.concat((char)packetbuffer[12]); leftTrigger.concat((char)packetbuffer[13]);
+      rightTriggerInt = rightTrigger.toInt();
+      leftTriggerInt = leftTrigger.toInt();
+      break;
+    }
+    
       
 
     while (ble -> available()) {
