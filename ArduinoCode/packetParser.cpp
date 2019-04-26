@@ -72,8 +72,7 @@ uint8_t readPacket(Adafruit_BLE *ble, uint16_t timeout)
       leftTriggerInt = leftTrigger.toInt();
       break;
     }
-    
-      
+     
 
     while (ble -> available()) {
       char c =  ble->read();

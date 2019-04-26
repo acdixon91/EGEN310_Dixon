@@ -105,6 +105,8 @@ int enB = 3;
 int in1B = 2;
 int in2B = 4;
 
+//int tx = 1;
+
 
 /**************************************************************************/
 /*!
@@ -128,6 +130,8 @@ void setup(void)
   pinMode(enB, OUTPUT);
   pinMode(in1B, OUTPUT);
   pinMode(in2B, OUTPUT);
+
+//  pinMode(tx, OUTPUT);
   
   while (!Serial);  // required for Flora & Micro
   delay(500);
@@ -197,8 +201,8 @@ void setup(void)
 /**************************************************************************/
 void loop(void)
 {
-
-//  servo.attach(6);
+  
+  servo.attach(6);
    
   /* Wait for new data to arrive */
   uint8_t len = readPacket(&ble, BLE_READPACKET_TIMEOUT);
@@ -230,13 +234,13 @@ void loop(void)
     }
 
     //motor A 
-    digitalWrite(in1A, HIGH);
-    digitalWrite(in2A, LOW);
+    digitalWrite(in1A, LOW);
+    digitalWrite(in2A, HIGH);
     analogWrite(enA, leftTriggerInt);    
 
     //motor B 
-    digitalWrite(in1B, HIGH);
-    digitalWrite(in2B, LOW);
+    digitalWrite(in1B, LOW);
+    digitalWrite(in2B, HIGH);
     analogWrite(enB, leftTriggerInt);    
   }
 
@@ -254,13 +258,13 @@ void loop(void)
     }
     
     //motor A 
-    digitalWrite(in1A, LOW);
-    digitalWrite(in2A, HIGH);
+    digitalWrite(in1A, HIGH);
+    digitalWrite(in2A, LOW);
     analogWrite(enA, rightTriggerInt);    
 
     //motor B
-    digitalWrite(in1B, LOW);
-    digitalWrite(in2B, HIGH);
+    digitalWrite(in1B, HIGH);
+    digitalWrite(in2B, LOW);
     analogWrite(enB, rightTriggerInt);
     
 //    servo
@@ -278,7 +282,6 @@ void loop(void)
     Serial.println("Right Trigger: " + rightTrigger);
     Serial.println("Left Thumbstick: " + leftTrigger); 
     Serial.println("Left Thumbstick: " + leftThumbstick); 
-    Serial.println(rightTriggerInt);
     Serial.println("----------------------------");
 
     if(rightTriggerInt == 75) // the application sends 090 when the trigger isn't pressed. If 090 is received, set the leftTrigger value to 000
@@ -299,8 +302,8 @@ void loop(void)
     analogWrite(enA, rightTriggerInt);    
 
     //motor B
-    digitalWrite(in1B, LOW);
-    digitalWrite(in2B, HIGH);
+    digitalWrite(in1B, HIGH);
+    digitalWrite(in2B, LOW);
     analogWrite(enB, rightTriggerInt);
     }
 
@@ -318,6 +321,7 @@ void loop(void)
     
     // servo
     if(leftThumbstick.toInt() != pastDegree){
+//      Serial.println("******");
       servo.write(leftThumbstick.toInt());
       pastDegree = leftThumbstick.toInt();
     }
