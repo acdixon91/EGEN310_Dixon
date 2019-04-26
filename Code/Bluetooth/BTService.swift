@@ -3,15 +3,12 @@
 //  ArduinoBluetooth
 //
 //  Created by Andrew Dixon on 2/04/19.
-//  Copyright © 2019 Andrew Dixon. All rights reserved.
 //
 
 import Foundation
 import CoreBluetooth
 
 /* Services & Characteristics UUIDs */
-
-
 
 let BLEServiceUUID = CBUUID(string: "6e400001-b5a3-f393-e0a9-e50e24dcca9e")
 let PositionCharUUID = CBUUID(string: "6e400002-b5a3-f393-e0a9-e50e24dcca9e")
@@ -94,8 +91,7 @@ class BTService: NSObject, CBPeripheralDelegate {
       }
     }
   }
-  
-  // Mark: - Private
+
     
     func writeData(_ position: Data) {
     // See if characteristic has been discovered before writing to it

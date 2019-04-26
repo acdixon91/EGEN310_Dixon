@@ -3,7 +3,6 @@
 //  ArduinoBluetooth
 //
 //  Created by Andrew Dixon on 3/31/19.
-//  Copyright © 2019 Andrew Dixon. All rights reserved.
 //
 
 import Foundation
@@ -19,6 +18,7 @@ class BTCommunication {
     var previousData: Data?
     var previousDataC: Data?
     var previousDataD: Data?
+    var previousDataE: Data?
     
     
     /// Takes in controller inputs and prepares them to be sent on to the BT device
@@ -26,38 +26,68 @@ class BTCommunication {
     /// - Parameter position: A snapshot of all inputs on the controller, taken every 1ms
     func sendRemoteData(_ position : GCExtendedGamepadSnapshot){
         print("Sending Controller data ----->")
-        let leftTrigger = String(format: "%.0f", (position.leftTrigger.value + 1) * 100)
-        let rightTrigger = String(format: "%.0f", (position.rightTrigger.value + 1) * 100)
-        let leftThumbStick = String(format: "%.0f", (position.leftThumbstick.xAxis.value + 2) * 100)
-        let rightThumbStick = String(format: "%.0f", (position.rightThumbstick.xAxis.value + 2) * 100)
+        var leftTrigger = String(format: "%.0f", (position.leftTrigger.value + 0.5) * 150)
+        var rightTrigger = String(format: "%.0f", (position.rightTrigger.value + 0.5) * 150)
+        var leftThumbStick = String(format: "%.0f", (position.leftThumbstick.xAxis.value + 1) * 90)
+        var rightThumbStick = String(format: "%.0f", (position.rightThumbstick.xAxis.value + 1) * 90)
+        
+        leftTrigger = (intSize(leftTrigger))
+        rightTrigger = (intSize(rightTrigger))
+        leftThumbStick = (intSize(leftThumbStick))
+        rightThumbStick = (intSize(rightThumbStick))
+        
+        leftThumbStick = thumbLimiter(leftThumbStick)
+        rightThumbStick = thumbLimiter(rightThumbStick)
+//        leftThumbStick = formatThumbInput(leftThumbStick)
+//        rightThumbStick = formatThumbInput(rightThumbStick)
+        
+        leftThumbStick = (intSize(leftThumbStick))
 
-        let firstPos = "!C:lt\(leftTrigger):rs\(rightThumbStick)$" as NSString
-        let secondPos = "!D:rt\(rightTrigger):ls\(leftThumbStick)$" as NSString
-
+        let firstPos = "!C:lt\(leftTrigger)rs\(rightThumbStick)$" as NSString
+        let secondPos = "!D:rt\(rightTrigger)ls\(leftThumbStick)$" as NSString
+        let thirdPos = "!Et\(rightTrigger)s\(leftThumbStick)t\(leftTrigger)$" as NSString
         
         let firstPosData = firstPos.data(using: String.Encoding.utf8.rawValue)
         let secondPosData = secondPos.data(using: String.Encoding.utf8.rawValue)
+        let thirdPosData = thirdPos.data(using: String.Encoding.utf8.rawValue)
+        
         newPosition(firstPosData!, "C", leftTrigger, rightThumbStick)
         newPosition(secondPosData!, "D", rightTrigger, leftThumbStick)
+        newPosition(thirdPosData!, "E", rightTrigger, leftThumbStick, leftTrigger)
 
     }
     
-    // Check to see if the possition has has already been sent
+    // Check to see if the position has has already been sent
     func newPosition(_ position: Data, _ name: NSString, _ trigger: String, _ thumb: String){
+        
         if name == "C" && position != previousDataC {
             print("Sending C - L Trigger: \(trigger) R Thumb: \(thumb)")
             sendPosition(position)
             previousDataC = position
         }
+            
         else if name == "D" && position != previousDataD {
             print("Sending D - R Trigger: \(trigger) L Thumb: \(thumb)")
             sendPosition(position)
             previousDataD = position
+            print(position)
         }
     }
     
-
+    // OVERLOADED FUNCTION - Check to see if the position has has already been sent for 3 inputs
+    func newPosition(_ position: Data, _ name: NSString, _ triggerA: String, _ thumb: String, _ triggerB: String){
+        
+        if name == "E" && position != previousDataC {
+            print("Sending E - L Trigger: \(triggerA) R Thumb: \(thumb) R Trigger: \(triggerB)")
+//            sendPosition(position)
+            previousDataC = position
+        }
+    }
+    
+    
+    //takes in postion data. Checks to see if 1ms timer has ended; if so - it sends data, if not - it adds to the buffer to be sent afterwards
     func sendPosition(_ position: Data) {
+        
         if !allowTX {
             if(position != previousData){
                 buffer.append(position)
@@ -66,12 +96,9 @@ class BTCommunication {
             return
         }
         
-        // Send position to BLE Shield (if service exists and is connected)
-        if let bleService = btDiscoverySharedInstance.bleService {
+        if let bleService = btDiscoverySharedInstance.bleService {          // Send position to BLE Shield (if service exists and is connected)
             print("sending location")
             bleService.writeData(position)
-            
-
             previousData = position
             
             // Start delay timer
@@ -82,6 +109,8 @@ class BTCommunication {
         }
     }
     
+    
+    //timer object
     @objc func timerTXDelayElapsed() {
         self.allowTX = true
         self.stopTimerTXDelay()
@@ -96,11 +125,98 @@ class BTCommunication {
         }
     }
     
+    
+    //turns off timer
     func stopTimerTXDelay() {
+        
         if self.timerTXDelay == nil {
             return
         }
         timerTXDelay?.invalidate()
         self.timerTXDelay = nil
+    }
+    
+    
+    //Changes the format of the outgoing string so that its always sending 3 digets
+    func intSize(_ position: String) -> String{
+        var stringPos = position
+        let inPos = (position as NSString).integerValue
+        
+        if case 0 ... 9 = inPos{
+            stringPos = "00\(stringPos)"
+            return stringPos
+        }
+        else if case 10 ... 99 = inPos{
+            stringPos = "0\(stringPos)"
+            return stringPos
+        }
+        else{
+        return stringPos
+        }
+    }
+    
+    
+    //limits the thumbstick output to 60 - 120 degrees
+    func formatThumbInput(_ position: String) -> String {
+        var stringPos = position
+        let inPos = (position as NSString).integerValue
+        
+        if case 0 ... 70 = inPos{
+            stringPos = "070"
+            return stringPos
+        }
+        else if case 110 ... 180 = inPos{
+            stringPos = "110"
+            return stringPos
+        }
+        else{
+            return stringPos
+        }
+    }
+    
+    
+    //propotionatly brings the range from 0-180 to 70-120
+    func thumbLimiter(_ position: String) -> String {
+        var inPos = (position as NSString).integerValue
+        
+        switch inPos {
+        case 0 ... 20:
+            inPos = 70
+            
+        case 21 ... 40:
+            inPos = 73
+            
+        case 41 ... 60:
+            inPos = 78
+        
+        case 61 ... 80:
+            inPos = 82
+            
+        case 81 ... 89:
+            inPos = 87
+        
+        case 90:
+            inPos = 90
+            
+        case 91 ... 100:
+            inPos = 93
+            
+        case 101 ... 120:
+            inPos = 98
+            
+        case 121 ... 140:
+            inPos = 102
+            
+        case 141 ... 160:
+            inPos = 107
+            
+        case 161 ... 180:
+            inPos = 110
+        
+        default:
+            inPos = 90
+        }
+        
+        return String(inPos)
     }
 }

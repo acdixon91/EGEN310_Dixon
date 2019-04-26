@@ -3,7 +3,6 @@
 //  ArduinoBluetooth
 //
 //  Created by Andrew Dixon on 3/4/19.
-//  Copyright © 2019 Andrew Dixon. All rights reserved.
 //
 
 import Foundation
@@ -32,12 +31,14 @@ class GameController : NSObject{
         GCController.startWirelessControllerDiscovery(completionHandler: {})
     }
     
+    
     func stopWatchingForControllers() {
         let ctr = NotificationCenter.default
         ctr.removeObserver(self, name: .GCControllerDidConnect, object: nil)
         ctr.removeObserver(self, name: .GCControllerDidDisconnect, object: nil)
         GCController.stopWirelessControllerDiscovery()
     }
+    
     
     func add(_ controller: GCController) {
         let name = String(describing:controller.vendorName)
@@ -52,6 +53,7 @@ class GameController : NSObject{
             print("Huh? \(name)")
         }
     }
+    
     
     func remove(_ controller: GCController) {
         

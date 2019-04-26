@@ -3,7 +3,6 @@
 //  ArduinoBluetooth
 //
 //  Created by Andrew Dixon on 3/8/19.
-//  Copyright © 2019 Andrew Dixon. All rights reserved.
 //
 
 import Foundation
@@ -56,9 +55,8 @@ public class ExtendedGamePad{
         }
     }
     
-    
+    //timer to take snapshot every 2ms
     func timerCheck() {
-
         if self.allowTX == true {
             self.allowTX = false
             if timerTXDelay == nil {

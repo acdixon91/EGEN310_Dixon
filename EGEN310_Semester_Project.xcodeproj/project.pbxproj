@@ -22,9 +22,6 @@
 /* Begin PBXFileReference section */
 		2B4E62DD2232F55B000C67C1 /* ExtendedGamepad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedGamepad.swift; sourceTree = "<group>"; };
 		2B4E62DF223302D5000C67C1 /* Gamepad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gamepad.swift; sourceTree = "<group>"; };
-		2B6741A022558E8600555AB4 /* EGEN310_Semester_Project.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EGEN310_Semester_Project.entitlements; sourceTree = "<group>"; };
-		2B6741A122558E8600555AB4 /* EGEN310_Semester_Project.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EGEN310_Semester_Project.entitlements; sourceTree = "<group>"; };
-		2B6741A222558E8600555AB4 /* EGEN310_Semester_Project.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EGEN310_Semester_Project.entitlements; sourceTree = "<group>"; };
 		2BA95863222CE3D0008E205B /* EGEN310_Semester_Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EGEN310_Semester_Project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA95866222CE3D0008E205B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2BA95868222CE3D0008E205B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,9 +59,6 @@
 		2BA9585A222CE3D0008E205B = {
 			isa = PBXGroup;
 			children = (
-				2B6741A222558E8600555AB4 /* EGEN310_Semester_Project.entitlements */,
-				2B6741A122558E8600555AB4 /* EGEN310_Semester_Project.entitlements */,
-				2B6741A022558E8600555AB4 /* EGEN310_Semester_Project.entitlements */,
 				2BA95865222CE3D0008E205B /* Code */,
 				2BA95864222CE3D0008E205B /* Products */,
 			);
